@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Tuple, List, Dict, Any
 import random
-from racetrack_env import RacetrackEnv
+from simple_racetrack_env import SimpleRacetrackEnv
 
 
 class SarsaLambdaAgent:
@@ -10,7 +10,7 @@ class SarsaLambdaAgent:
     使用资格迹加速学习
     """
     
-    def __init__(self, env: RacetrackEnv, alpha=0.1, gamma=0.95, lambda_=0.9, epsilon=0.1):
+    def __init__(self, env: SimpleRacetrackEnv, alpha=0.1, gamma=0.95, lambda_=0.9, epsilon=0.1):
         self.env = env
         self.alpha = alpha
         self.gamma = gamma
@@ -189,7 +189,7 @@ def main():
     print("=== Sarsa(λ) 智能体训练演示 ===")
     
     # 创建环境
-    env = RacetrackEnv(track_size=(32, 17), max_speed=5)
+    env = SimpleRacetrackEnv(track_size=(32, 17), max_speed=5)
     print(f"环境信息：")
     print(f"  - 赛道大小: {env.track_size}")
     print(f"  - 最大速度: {env.max_speed}")

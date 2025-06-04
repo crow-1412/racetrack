@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 import pickle
 import json
 from sarsa_lambda import SarsaLambdaAgent
-from racetrack_env import RacetrackEnv
+from simple_racetrack_env import SimpleRacetrackEnv
 
 def train_and_find_successful_path():
     """训练智能体并找到成功路径"""
     print("=== 开始训练智能体并寻找成功路径 ===")
     
     # 创建环境
-    env = RacetrackEnv(track_size=(32, 17), max_speed=5)
+    env = SimpleRacetrackEnv(track_size=(32, 17), max_speed=5)
     print(f"环境信息：")
     print(f"  - 赛道大小: {env.track_size}")
     print(f"  - 起点数量: {len(env.start_positions)}")
@@ -269,7 +269,7 @@ def load_and_visualize_saved_path():
         print(f"选定路径: {selected_path['steps']} 步, 奖励: {selected_path['reward']:.2f}")
         
         # 重新创建环境进行可视化
-        env = RacetrackEnv(track_size=(32, 17), max_speed=5)
+        env = SimpleRacetrackEnv(track_size=(32, 17), max_speed=5)
         visualize_successful_path(env, selected_path)
         
         return selected_path
