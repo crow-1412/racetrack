@@ -355,12 +355,12 @@ class OptimizedActorCriticAgent:
         gae = 0
         
         for t in reversed(range(len(rewards))):
-            if t == len(rewards) - 1:
-                next_value = 0 if dones[t] else next_values[t]
-            else:
-                next_value = values[t + 1]
-            
-            delta = rewards[t] + self.gamma * next_value * (1 - dones[t]) - values[t]
+            # Use the estimated value of the next state provided to this
+            # function. When the current step is terminal, there is no
+            # bootstrap value so we set it to 0.
+            next_value = 0 if dones[t] else next_values[t]
+
+            delta = rewards[t] + self.gamma * next_value - values[t]
             gae = delta + self.gamma * self.gae_lambda * (1 - dones[t]) * gae
             advantages[t] = gae
         
