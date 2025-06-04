@@ -203,6 +203,7 @@ class OptimizedActorCriticAgent:
         
         episode_buffer = []
         
+        last_reward = 0  # Track the last environment reward to determine success
         while steps < max_steps:
             # 选择动作
             action, log_prob = self.select_action(state, training=True)
@@ -212,6 +213,7 @@ class OptimizedActorCriticAgent:
             
             # 执行动作
             next_state, reward, done = self.env.step(action)
+            last_reward = reward  # remember raw reward before shaping
             
             # 修复：检测碰撞的正确方法
             # 如果奖励是-10且没有成功到达终点，说明发生了碰撞
@@ -245,7 +247,9 @@ class OptimizedActorCriticAgent:
         # 更新探索率
         self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
         
-        success = (steps < max_steps and done and total_reward > 0)
+        # Determine success based on the final environment reward indicating
+        # the goal was reached (reward == 100 from RacetrackEnv.step)
+        success = (steps < max_steps and done and last_reward == 100)
         return total_reward, steps, success
     
     def _improved_reward_shaping(self, state, next_state, reward, done, steps):
@@ -401,6 +405,7 @@ class OptimizedActorCriticAgent:
         path = [state[:2]]
         max_steps = 300
         
+        last_reward = 0  # Track the last reward to determine success
         with torch.no_grad():
             while steps < max_steps:
                 action, _ = self.select_action(state, training=False)
@@ -408,13 +413,15 @@ class OptimizedActorCriticAgent:
                 total_reward += reward
                 steps += 1
                 path.append(next_state[:2])
+                last_reward = reward  # store raw reward for success check
                 
                 if done:
                     break
                 
                 state = next_state
         
-        success = (steps < max_steps and done and total_reward > 0)
+        # Successful episode if the final raw reward signals reaching the goal
+        success = (steps < max_steps and done and last_reward == 100)
         
         if render:
             self.env.render(show_path=path)
