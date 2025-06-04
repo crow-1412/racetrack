@@ -219,7 +219,9 @@ class OptimizedActorCriticAgent:
             # 如果奖励是-10且没有成功到达终点，说明发生了碰撞
             crashed = (reward == -10 and not done)
             if crashed:
-                done = True  # 强制终止
+                # 环境已经将智能体重置到起点，此处不再终止episode，
+                # 允许智能体继续尝试以便从失败中学习
+                pass
             
             # 改进的奖励塑形
             shaped_reward = self._improved_reward_shaping(prev_state, next_state, reward, done, steps)
@@ -257,7 +259,8 @@ class OptimizedActorCriticAgent:
         if done and reward > 0:
             return reward + 50  # 增加成功奖励
         
-        if done and reward < 0:
+        # 如果reward为-10且未结束，说明发生了碰撞并被重置到起点
+        if (reward == -10 and not done) or (done and reward < 0):
             return -20  # 碰撞惩罚
         
         # 进步奖励（加大权重）
