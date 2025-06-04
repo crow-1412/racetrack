@@ -146,27 +146,33 @@ class OptimizedActorCriticAgent:
     
     def select_action(self, state: Tuple[int, int, int, int], training=True) -> Tuple[int, torch.Tensor]:
         """使用ε-贪心策略选择动作"""
-        self.network.eval()  # 关键修复：采样时设为eval模式
-        
-        with torch.no_grad():
-            state_tensor = self.state_to_tensor(state)
+        self.network.eval()  # 评估模式进行采样
+
+        state_tensor = self.state_to_tensor(state)
+
+        if training:
+            # 训练时需要梯度，因此不使用 no_grad
             action_probs, _ = self.network(state_tensor)
-            
-            # 应用严格的动作掩码
-            action_probs = self._apply_strict_action_mask(state, action_probs)
-            
-            if training and random.random() < self.epsilon:
-                # ε-贪心探索
-                action_dist = torch.distributions.Categorical(action_probs)
-                action = action_dist.sample()
-            else:
-                # 贪心选择
-                action = torch.argmax(action_probs)
-            
-            # 重新计算log_prob用于训练
+        else:
+            # 测试或评估时不需要梯度
+            with torch.no_grad():
+                action_probs, _ = self.network(state_tensor)
+
+        # 应用严格的动作掩码
+        action_probs = self._apply_strict_action_mask(state, action_probs)
+
+        if training and random.random() < self.epsilon:
+            # ε-贪心探索
             action_dist = torch.distributions.Categorical(action_probs)
-            log_prob = action_dist.log_prob(action)
-            
+            action = action_dist.sample()
+        else:
+            # 贪心选择
+            action = torch.argmax(action_probs)
+
+        # 重新计算log_prob用于训练
+        action_dist = torch.distributions.Categorical(action_probs)
+        log_prob = action_dist.log_prob(action)
+
         return action.item(), log_prob
     
     def _apply_strict_action_mask(self, state: Tuple[int, int, int, int], 
