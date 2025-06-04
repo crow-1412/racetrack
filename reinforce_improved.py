@@ -56,67 +56,80 @@ class ImprovedREINFORCEAgent:
     改进的REINFORCE智能体，修复收敛问题
     """
     
-    def __init__(self, env: RacetrackEnv, lr=0.003, gamma=0.99, hidden_dim=256, use_baseline=True):
+    def __init__(self, env: RacetrackEnv, lr=0.001, gamma=0.99, hidden_dim=256, use_baseline=True):
         self.env = env
         self.gamma = gamma
         self.use_baseline = use_baseline
         
         # 扩展状态特征维度，增加更多有用信息
-        self.state_dim = 8  # 位置(2) + 速度(2) + 到终点距离(1) + 相对位置(2) + 动作mask(1)
+        self.state_dim = 10  # 增加更多特征维度
         self.action_dim = env.n_actions
         
         # 创建策略网络，使用更大的网络
         self.policy_net = PolicyNetwork(self.state_dim, self.action_dim, hidden_dim)
         self.policy_optimizer = optim.Adam(self.policy_net.parameters(), lr=lr, weight_decay=1e-5)
         
-        # 学习率调度器
-        self.policy_scheduler = optim.lr_scheduler.StepLR(self.policy_optimizer, step_size=500, gamma=0.8)
+        # 学习率调度器 - 更缓慢的衰减
+        self.policy_scheduler = optim.lr_scheduler.StepLR(self.policy_optimizer, step_size=1000, gamma=0.9)
         
         # 如果使用基线，创建价值网络
         if self.use_baseline:
             self.value_net = ValueNetwork(self.state_dim, hidden_dim)
             self.value_optimizer = optim.Adam(self.value_net.parameters(), lr=lr, weight_decay=1e-5)
-            self.value_scheduler = optim.lr_scheduler.StepLR(self.value_optimizer, step_size=500, gamma=0.8)
+            self.value_scheduler = optim.lr_scheduler.StepLR(self.value_optimizer, step_size=1000, gamma=0.9)
         
         # 训练统计
         self.episode_rewards: List[float] = []
         self.episode_steps: List[int] = []
         self.success_rate: List[float] = []
         
-        # 经验回放缓冲区（存储最近的轨迹）
-        self.trajectory_buffer = []
-        self.buffer_size = 10
+        # 修改：改为单轨迹更新而不是批量更新
+        self.last_trajectory = None
     
     def state_to_tensor(self, state: Tuple[int, int, int, int]) -> torch.Tensor:
         """将状态转换为增强特征张量"""
         x, y, vx, vy = state
         
         # 基础特征归一化
-        norm_x = (x - 16) / 16.0  # 居中归一化
-        norm_y = (y - 8) / 8.0    # 居中归一化
+        norm_x = x / 31.0  # 0-31范围归一化
+        norm_y = y / 16.0  # 0-16范围归一化
         norm_vx = vx / self.env.max_speed
         norm_vy = vy / self.env.max_speed
         
-        # 计算到最近终点的距离
+        # 计算到最近终点的距离和方向
         min_distance = float('inf')
         goal_direction_x, goal_direction_y = 0, 0
         for goal_x, goal_y in self.env.goal_positions:
             distance = np.sqrt((x - goal_x)**2 + (y - goal_y)**2)
             if distance < min_distance:
                 min_distance = distance
-                goal_direction_x = (goal_x - x) / 32.0  # 归一化方向
-                goal_direction_y = (goal_y - y) / 17.0
+                # 修正方向计算
+                if distance > 0:
+                    goal_direction_x = (goal_x - x) / distance
+                    goal_direction_y = (goal_y - y) / distance
         
-        norm_distance = min_distance / (32 + 17)  # 最大可能距离归一化
+        norm_distance = min_distance / 50.0  # 归一化距离
         
-        # 是否在边界附近（安全特征）
-        safety_factor = 1.0
-        if x <= 2 or x >= 30 or y <= 1 or y >= 15:
-            safety_factor = 0.0
+        # 是否在起点
+        is_start = 1.0 if (x, y) in self.env.start_positions else 0.0
+        
+        # 是否接近终点
+        near_goal = 1.0 if min_distance <= 5 else 0.0
+        
+        # 速度方向是否朝向目标
+        velocity_alignment = 0.0
+        if min_distance > 0:
+            velocity_mag = np.sqrt(vx**2 + vy**2)
+            if velocity_mag > 0:
+                # 速度向量：向上为负x，向右为正y（根据环境定义）
+                vel_x = -vx / velocity_mag  
+                vel_y = vy / velocity_mag
+                velocity_alignment = max(0, vel_x * goal_direction_x + vel_y * goal_direction_y)
         
         return torch.tensor([
             norm_x, norm_y, norm_vx, norm_vy,
-            norm_distance, goal_direction_x, goal_direction_y, safety_factor
+            norm_distance, goal_direction_x, goal_direction_y, 
+            is_start, near_goal, velocity_alignment
         ], dtype=torch.float32)
     
     def select_action(self, state: Tuple[int, int, int, int], temperature=1.0) -> Tuple[int, torch.Tensor]:
@@ -129,7 +142,7 @@ class ImprovedREINFORCEAgent:
             action_logits = torch.log(action_probs + 1e-8) / temperature
             action_probs = F.softmax(action_logits, dim=-1)
         
-        # 添加动作掩码，避免明显的坏动作
+        # 应用动作掩码（更宽松）
         action_probs = self._apply_action_mask(state, action_probs)
         
         # 使用概率分布采样动作
@@ -140,25 +153,26 @@ class ImprovedREINFORCEAgent:
         return action.item(), log_prob
     
     def _apply_action_mask(self, state: Tuple[int, int, int, int], action_probs: torch.Tensor) -> torch.Tensor:
-        """应用动作掩码，减少明显的错误动作"""
+        """应用动作掩码，减少明显的错误动作（更宽松版本）"""
         x, y, vx, vy = state
         
-        # 创建动作掩码（避免撞墙）
+        # 创建动作掩码
         mask = torch.ones_like(action_probs)
         
         for i, (ax, ay) in enumerate(self.env.actions):
             # 预测下一步位置
             new_vx = max(0, min(self.env.max_speed, vx + ax))
             new_vy = max(0, min(self.env.max_speed, vy + ay))
-            new_x = x - new_vx
-            new_y = y + new_vy
+            new_x = x - new_vx  # 向上移动
+            new_y = y + new_vy  # 向右移动
             
-            # 如果会撞墙，降低概率
+            # 如果明显会撞墙，降低概率（但不完全禁止）
             if (new_x < 0 or new_x >= self.env.track_size[0] or 
-                new_y < 0 or new_y >= self.env.track_size[1] or
-                (new_x < self.env.track_size[0] and new_y < self.env.track_size[1] and 
-                 self.env.track[new_x, new_y] == 1)):
-                mask[i] = 0.1  # 大幅降低概率而不是完全禁止
+                new_y < 0 or new_y >= self.env.track_size[1]):
+                mask[i] = 0.3  # 降低但不完全禁止
+            elif (new_x < self.env.track_size[0] and new_y < self.env.track_size[1] and 
+                  self.env.track[new_x, new_y] == 1):
+                mask[i] = 0.3  # 降低但不完全禁止
         
         # 重新归一化
         masked_probs = action_probs * mask
@@ -175,7 +189,7 @@ class ImprovedREINFORCEAgent:
             return torch.tensor(0.0)
     
     def train_episode(self, episode_num: int) -> Tuple[float, int, bool]:
-        """训练一个episode，添加探索策略"""
+        """训练一个episode，修复探索策略"""
         state = self.env.reset()
         
         # 存储轨迹
@@ -189,8 +203,8 @@ class ImprovedREINFORCEAgent:
         steps = 0
         max_steps = 500  # 限制最大步数
         
-        # 探索温度调度
-        temperature = max(0.5, 1.0 - episode_num / 2000)
+        # 修改：更好的探索温度调度
+        temperature = max(0.8, 1.5 - episode_num / 3000)  # 更慢的探索衰减
         
         # 收集完整轨迹
         while steps < max_steps:
@@ -199,8 +213,8 @@ class ImprovedREINFORCEAgent:
             
             next_state, reward, done = self.env.step(action)
             
-            # 修改奖励塑形
-            shaped_reward = self._shape_reward(state, next_state, reward, done)
+            # 改进的奖励塑形
+            shaped_reward = self._shape_reward(state, next_state, reward, done, steps)
             
             states.append(state)
             actions.append(action)
@@ -216,13 +230,15 @@ class ImprovedREINFORCEAgent:
             
             state = next_state
         
-        # 如果没有到达终点，给一个小的负奖励
+        # 判断成功
         success = (steps < max_steps and done)
-        if not success:
-            rewards[-1] -= 5  # 惩罚未完成
         
-        # 存储轨迹到缓冲区
-        trajectory = {
+        # 如果没有成功，给额外惩罚
+        if not success:
+            rewards[-1] -= 20  # 更大的失败惩罚
+        
+        # 存储轨迹
+        self.last_trajectory = {
             'states': states,
             'actions': actions,
             'rewards': rewards,
@@ -231,78 +247,67 @@ class ImprovedREINFORCEAgent:
             'success': success
         }
         
-        # 更新缓冲区
-        self.trajectory_buffer.append(trajectory)
-        if len(self.trajectory_buffer) > self.buffer_size:
-            self.trajectory_buffer.pop(0)
-        
-        # 批量更新（缓冲区满时或者成功时）
-        if len(self.trajectory_buffer) >= self.buffer_size or success:
-            self._batch_update()
+        # 每个episode都更新（而不是批量更新）
+        self._update_networks()
         
         return total_reward, steps, success
     
-    def _shape_reward(self, state, next_state, reward, done):
-        """奖励塑形"""
+    def _shape_reward(self, state, next_state, reward, done, steps):
+        """改进的奖励塑形"""
         if done and reward > 0:
-            return reward  # 成功奖励不变
+            return reward + 50  # 额外成功奖励
         
         # 距离奖励
         x, y, _, _ = state
         next_x, next_y, _, _ = next_state
         
-        # 当前距离最近终点
+        # 当前和下一步到最近终点的距离
         curr_dist = min([abs(x - gx) + abs(y - gy) for gx, gy in self.env.goal_positions])
         next_dist = min([abs(next_x - gx) + abs(next_y - gy) for gx, gy in self.env.goal_positions])
         
-        # 如果靠近终点，给予奖励
-        progress_reward = (curr_dist - next_dist) * 0.1
+        # 进步奖励（更大）
+        progress_reward = (curr_dist - next_dist) * 0.5
         
-        # 速度奖励（鼓励保持适当速度）
+        # 速度奖励 - 鼓励保持合理速度
         _, _, vx, vy = next_state
-        speed_reward = min(vx + vy, 3) * 0.02  # 鼓励但不过度
+        speed = vx + vy
+        speed_reward = min(speed, 4) * 0.1  # 鼓励但不过度
         
-        return reward + progress_reward + speed_reward
+        # 生存奖励 - 鼓励不要太快结束
+        survival_reward = 0.01
+        
+        # 接近终点时的额外奖励
+        proximity_bonus = 0.0
+        if next_dist <= 5:
+            proximity_bonus = (5 - next_dist) * 2.0
+        
+        return reward + progress_reward + speed_reward + survival_reward + proximity_bonus
     
-    def _batch_update(self):
-        """批量更新网络"""
-        if not self.trajectory_buffer:
+    def _update_networks(self):
+        """更新网络（每个episode更新一次）"""
+        if not self.last_trajectory:
             return
         
-        # 计算所有轨迹的折扣回报
-        all_returns = []
-        all_log_probs = []
-        all_values = []
+        trajectory = self.last_trajectory
         
-        for trajectory in self.trajectory_buffer:
-            # 计算折扣回报
-            returns = []
-            G = 0.0
-            for reward in reversed(trajectory['rewards']):
-                G = reward + self.gamma * G
-                returns.insert(0, G)
-            
-            all_returns.extend(returns)
-            all_log_probs.extend(trajectory['log_probs'])
-            if self.use_baseline:
-                all_values.extend(trajectory['values'])
+        # 计算折扣回报
+        returns = []
+        G = 0.0
+        for reward in reversed(trajectory['rewards']):
+            G = reward + self.gamma * G
+            returns.insert(0, G)
         
-        if not all_returns:
+        if not returns:
             return
         
         # 转换为张量
-        returns = torch.tensor(all_returns, dtype=torch.float32)
-        log_probs = torch.stack(all_log_probs)
+        returns = torch.tensor(returns, dtype=torch.float32)
+        log_probs = torch.stack(trajectory['log_probs'])
         
-        if self.use_baseline and all_values:
-            # 重新计算values以避免梯度图问题
-            all_states = []
-            for trajectory in self.trajectory_buffer:
-                all_states.extend(trajectory['states'])
-            
-            # 重新前向传播计算values
+        if self.use_baseline and trajectory['values']:
+            # 重新计算values
             values = []
-            for state in all_states:
+            for state in trajectory['states']:
                 state_tensor = self.state_to_tensor(state)
                 value = self.value_net(state_tensor)
                 values.append(value)
@@ -312,7 +317,7 @@ class ImprovedREINFORCEAgent:
             # 计算优势函数
             advantages = returns - values
             
-            # 标准化优势
+            # 标准化优势（如果有多个值）
             if len(advantages) > 1:
                 advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
             
@@ -321,7 +326,7 @@ class ImprovedREINFORCEAgent:
             
             # 更新价值网络
             self.value_optimizer.zero_grad()
-            value_loss.backward()  # 移除retain_graph=True
+            value_loss.backward()
             torch.nn.utils.clip_grad_norm_(self.value_net.parameters(), 0.5)
             self.value_optimizer.step()
             
@@ -339,9 +344,6 @@ class ImprovedREINFORCEAgent:
         policy_loss.backward()
         torch.nn.utils.clip_grad_norm_(self.policy_net.parameters(), 0.5)
         self.policy_optimizer.step()
-        
-        # 清空缓冲区以避免重复使用
-        self.trajectory_buffer.clear()
     
     def train(self, n_episodes: int, verbose: bool = True) -> Tuple[List[float], List[int], List[float]]:
         """训练智能体"""
@@ -365,7 +367,7 @@ class ImprovedREINFORCEAgent:
             self.success_rate.append(current_success_rate)
             
             # 学习率调度
-            if episode % 500 == 0:
+            if episode % 1000 == 0 and episode > 0:
                 self.policy_scheduler.step()
                 if self.use_baseline:
                     self.value_scheduler.step()
@@ -455,14 +457,14 @@ def main():
     print("\n=== 改进的REINFORCE智能体（带基线）===")
     agent = ImprovedREINFORCEAgent(
         env=env,
-        lr=0.003,
+        lr=0.001,  # 降低学习率
         gamma=0.99,
         hidden_dim=256,
         use_baseline=True
     )
     
     print(f"智能体参数：")
-    print(f"  - 学习率: 0.003")
+    print(f"  - 学习率: 0.001")
     print(f"  - 折扣因子 γ: 0.99")
     print(f"  - 隐藏层维度: 256")
     print(f"  - 使用基线: True")
@@ -475,7 +477,7 @@ def main():
     
     # 训练智能体
     print(f"\n=== 开始训练改进的REINFORCE ===")
-    n_episodes = 2000
+    n_episodes = 3000  # 增加训练轮数
     rewards, steps, success_rates = agent.train(n_episodes=n_episodes, verbose=True)
     
     # 分析训练结果
