@@ -85,8 +85,11 @@ class OptimizedActorCriticAgent:
         
         # ε-贪心探索（替代温度探索）
         self.epsilon = 1.0
-        self.epsilon_min = 0.05
-        self.epsilon_decay = 0.995
+        self.epsilon_min = 0.1
+        self.epsilon_decay = 0.999
+
+        # Entropy正则化系数
+        self.entropy_coef = 0.01
         
         # 训练统计
         self.episode_rewards: List[float] = []
@@ -337,8 +340,8 @@ class OptimizedActorCriticAgent:
         dones = torch.tensor(dones, dtype=torch.float32)
         log_probs = torch.stack(log_probs)
         
-        # 计算价值和下一步价值
-        _, values = self.network(states)
+        # 重新计算动作概率和价值
+        action_probs_batch, values = self.network(states)
         _, next_values = self.network(next_states)
         
         values = values.squeeze()
@@ -356,8 +359,12 @@ class OptimizedActorCriticAgent:
         
         critic_loss = F.mse_loss(values, value_targets)
         actor_loss = -(log_probs * advantages.detach()).mean()
-        
-        total_loss = actor_loss + 0.5 * critic_loss
+
+        # 加入熵正则化以鼓励探索
+        action_dist = torch.distributions.Categorical(action_probs_batch)
+        entropy = action_dist.entropy().mean()
+
+        total_loss = actor_loss + 0.5 * critic_loss - self.entropy_coef * entropy
         
         # 更新网络
         self.optimizer.zero_grad()
