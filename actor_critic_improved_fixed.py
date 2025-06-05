@@ -185,6 +185,13 @@ class OptimizedActorCriticAgent:
             # 预测下一步位置
             new_vx = max(0, min(self.env.max_speed, vx + ax))
             new_vy = max(0, min(self.env.max_speed, vy + ay))
+
+            # 环境规则：速度不能同时为0（非起点），
+            # 实际执行时会被强制为1
+            if new_vx == 0 and new_vy == 0 and (x, y) not in self.env.start_positions:
+                new_vx = 1
+                new_vy = 1
+
             new_x = x - new_vx  # 向上移动
             new_y = y + new_vy  # 向右移动
             
