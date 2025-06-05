@@ -146,27 +146,33 @@ class OptimizedActorCriticAgent:
     
     def select_action(self, state: Tuple[int, int, int, int], training=True) -> Tuple[int, torch.Tensor]:
         """使用ε-贪心策略选择动作"""
-        self.network.eval()  # 关键修复：采样时设为eval模式
-        
-        with torch.no_grad():
-            state_tensor = self.state_to_tensor(state)
+        self.network.eval()  # 评估模式进行采样
+
+        state_tensor = self.state_to_tensor(state)
+
+        if training:
+            # 训练时需要梯度，因此不使用 no_grad
             action_probs, _ = self.network(state_tensor)
-            
-            # 应用严格的动作掩码
-            action_probs = self._apply_strict_action_mask(state, action_probs)
-            
-            if training and random.random() < self.epsilon:
-                # ε-贪心探索
-                action_dist = torch.distributions.Categorical(action_probs)
-                action = action_dist.sample()
-            else:
-                # 贪心选择
-                action = torch.argmax(action_probs)
-            
-            # 重新计算log_prob用于训练
+        else:
+            # 测试或评估时不需要梯度
+            with torch.no_grad():
+                action_probs, _ = self.network(state_tensor)
+
+        # 应用严格的动作掩码
+        action_probs = self._apply_strict_action_mask(state, action_probs)
+
+        if training and random.random() < self.epsilon:
+            # ε-贪心探索
             action_dist = torch.distributions.Categorical(action_probs)
-            log_prob = action_dist.log_prob(action)
-            
+            action = action_dist.sample()
+        else:
+            # 贪心选择
+            action = torch.argmax(action_probs)
+
+        # 重新计算log_prob用于训练
+        action_dist = torch.distributions.Categorical(action_probs)
+        log_prob = action_dist.log_prob(action)
+
         return action.item(), log_prob
     
     def _apply_strict_action_mask(self, state: Tuple[int, int, int, int], 
@@ -179,6 +185,13 @@ class OptimizedActorCriticAgent:
             # 预测下一步位置
             new_vx = max(0, min(self.env.max_speed, vx + ax))
             new_vy = max(0, min(self.env.max_speed, vy + ay))
+
+            # 环境规则：速度不能同时为0（非起点），
+            # 实际执行时会被强制为1
+            if new_vx == 0 and new_vy == 0 and (x, y) not in self.env.start_positions:
+                new_vx = 1
+                new_vy = 1
+
             new_x = x - new_vx  # 向上移动
             new_y = y + new_vy  # 向右移动
             
@@ -256,12 +269,13 @@ class OptimizedActorCriticAgent:
     
     def _improved_reward_shaping(self, state, next_state, reward, done, steps):
         """改进的奖励塑形"""
+        bonus = 0.0
         if done and reward > 0:
-            return reward + 50  # 增加成功奖励
+            bonus += 50  # 增加成功奖励
         
         # 如果reward为-10且未结束，说明发生了碰撞并被重置到起点
         if (reward == -10 and not done) or (done and reward < 0):
-            return -20  # 碰撞惩罚
+            bonus -= 20  # 碰撞惩罚
         
         # 进步奖励（加大权重）
         x, y, _, _ = state
@@ -277,7 +291,7 @@ class OptimizedActorCriticAgent:
         speed_reward = min(vx + vy, 4) * 0.3
         
         # 大幅减少步数惩罚
-        step_penalty = -0.02  # 从-0.05进一步减少到-0.02
+        step_penalty = -0.05  # 加强步数惩罚，避免原地不动
         
         # 接近目标的指数奖励
         proximity_bonus = 0.0
@@ -288,9 +302,10 @@ class OptimizedActorCriticAgent:
         if next_dist <= 2:
             proximity_bonus += 10.0
         
-        shaped_reward = step_penalty + progress_reward + speed_reward + proximity_bonus
-        
-        return shaped_reward
+        bonus += step_penalty + progress_reward + speed_reward + proximity_bonus
+
+        # 与环境奖励叠加，确保惩罚足够
+        return reward + bonus
     
     def _batch_update(self):
         """批量更新网络"""
