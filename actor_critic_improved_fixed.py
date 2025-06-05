@@ -269,12 +269,13 @@ class OptimizedActorCriticAgent:
     
     def _improved_reward_shaping(self, state, next_state, reward, done, steps):
         """改进的奖励塑形"""
+        bonus = 0.0
         if done and reward > 0:
-            return reward + 50  # 增加成功奖励
+            bonus += 50  # 增加成功奖励
         
         # 如果reward为-10且未结束，说明发生了碰撞并被重置到起点
         if (reward == -10 and not done) or (done and reward < 0):
-            return -20  # 碰撞惩罚
+            bonus -= 20  # 碰撞惩罚
         
         # 进步奖励（加大权重）
         x, y, _, _ = state
@@ -290,7 +291,7 @@ class OptimizedActorCriticAgent:
         speed_reward = min(vx + vy, 4) * 0.3
         
         # 大幅减少步数惩罚
-        step_penalty = -0.02  # 从-0.05进一步减少到-0.02
+        step_penalty = -0.05  # 加强步数惩罚，避免原地不动
         
         # 接近目标的指数奖励
         proximity_bonus = 0.0
@@ -301,9 +302,10 @@ class OptimizedActorCriticAgent:
         if next_dist <= 2:
             proximity_bonus += 10.0
         
-        shaped_reward = step_penalty + progress_reward + speed_reward + proximity_bonus
-        
-        return shaped_reward
+        bonus += step_penalty + progress_reward + speed_reward + proximity_bonus
+
+        # 与环境奖励叠加，确保惩罚足够
+        return reward + bonus
     
     def _batch_update(self):
         """批量更新网络"""
