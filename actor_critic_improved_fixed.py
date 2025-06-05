@@ -85,8 +85,9 @@ class OptimizedActorCriticAgent:
         
         # ε-贪心探索（替代温度探索）
         self.epsilon = 1.0
-        self.epsilon_min = 0.1
-        self.epsilon_decay = 0.999
+        # 更慢的衰减，使训练结束时epsilon约为0.05
+        self.epsilon_min = 0.05
+        self.epsilon_decay = 0.997
 
         # Entropy正则化系数
         self.entropy_coef = 0.01
@@ -154,26 +155,25 @@ class OptimizedActorCriticAgent:
         state_tensor = self.state_to_tensor(state)
 
         if training:
-            # 训练时需要梯度，因此不使用 no_grad
+            # 训练阶段保留梯度
             action_probs, _ = self.network(state_tensor)
         else:
-            # 测试或评估时不需要梯度
+            # 测试阶段不需要梯度
             with torch.no_grad():
                 action_probs, _ = self.network(state_tensor)
 
         # 应用严格的动作掩码
         action_probs = self._apply_strict_action_mask(state, action_probs)
 
+        # 使用ε-贪心：在训练时偶尔从均匀分布随机选取动作
         if training and random.random() < self.epsilon:
-            # ε-贪心探索
-            action_dist = torch.distributions.Categorical(action_probs)
-            action = action_dist.sample()
+            valid_mask = (action_probs > 0).float()
+            uniform_probs = valid_mask / valid_mask.sum()
+            action_dist = torch.distributions.Categorical(uniform_probs)
         else:
-            # 贪心选择
-            action = torch.argmax(action_probs)
+            action_dist = torch.distributions.Categorical(action_probs)
 
-        # 重新计算log_prob用于训练
-        action_dist = torch.distributions.Categorical(action_probs)
+        action = action_dist.sample()
         log_prob = action_dist.log_prob(action)
 
         return action.item(), log_prob
