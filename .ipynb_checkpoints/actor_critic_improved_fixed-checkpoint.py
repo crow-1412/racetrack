@@ -50,17 +50,18 @@ class Experience:
 
 class OptimizedActorCriticAgent:
     """
-    修复后的Actor-Critic智能体
-    主要修复：
-    1. 修复探索策略
-    2. 简化奖励塑形
-    3. 修复GAE计算
-    4. 改进网络更新策略
-    5. 添加训练稳定性措施
+    优化后的Actor-Critic智能体
+    主要改进：
+    1. 共享网络架构
+    2. 经验回放缓冲区
+    3. 改进的状态表示
+    4. 更好的探索策略
+    5. 优势标准化
+    6. 修复碰撞处理
     """
     
-    def __init__(self, env: RacetrackEnv, lr=0.001, gamma=0.99, 
-                 hidden_dim=128, buffer_size=128, gae_lambda=0.95):
+    def __init__(self, env: RacetrackEnv, lr=0.003, gamma=0.99, 
+                 hidden_dim=128, buffer_size=64, gae_lambda=0.95):
         self.env = env
         self.gamma = gamma
         self.gae_lambda = gae_lambda
@@ -73,34 +74,25 @@ class OptimizedActorCriticAgent:
         # 创建共享网络
         self.network = SharedNetwork(self.state_dim, self.action_dim, hidden_dim)
         
-        # 降低学习率，提高稳定性
-        self.optimizer = optim.AdamW(self.network.parameters(), lr=lr, weight_decay=1e-5)
+        # 单一优化器
+        self.optimizer = optim.AdamW(self.network.parameters(), lr=lr, weight_decay=1e-4)
         
-        # 更温和的学习率调度
-        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=1000, gamma=0.95)
+        # 学习率调度器（更激进的衰减）
+        self.scheduler = optim.lr_scheduler.StepLR(self.optimizer, step_size=500, gamma=0.9)
         
-        # 经验缓冲区 - 增大缓冲区
+        # 经验缓冲区
         self.buffer = deque(maxlen=buffer_size)
         
-        # 修复探索策略 - 更慢的衰减
-        self.epsilon = 0.8  # 降低初始探索率
-        self.epsilon_min = 0.05  # 保持最小探索
-        self.epsilon_decay = 0.9995  # 更慢的衰减
-
-        # 降低熵正则化系数
-        self.entropy_coef = 0.005
-        
-        # 添加训练稳定性措施
-        self.update_frequency = 32  # 更频繁的更新
-        self.target_update_freq = 100  # 添加目标网络更新频率
+        # ε-贪心探索（替代温度探索）
+        self.epsilon = 1.0
+        self.epsilon_min = 0.05
+        self.epsilon_decay = 0.995
         
         # 训练统计
         self.episode_rewards: List[float] = []
         self.episode_steps: List[int] = []
         self.success_rate: List[float] = []
         self.losses: List[float] = []
-        self.value_losses: List[float] = []
-        self.policy_losses: List[float] = []
     
     def state_to_tensor(self, state: Tuple[int, int, int, int]) -> torch.Tensor:
         """改进的状态表示 - 解决坐标系统一问题"""
@@ -153,32 +145,31 @@ class OptimizedActorCriticAgent:
         ], dtype=torch.float32)
     
     def select_action(self, state: Tuple[int, int, int, int], training=True) -> Tuple[int, torch.Tensor]:
-        """修复后的动作选择策略"""
-        self.network.eval()
+        """使用ε-贪心策略选择动作"""
+        self.network.eval()  # 评估模式进行采样
 
         state_tensor = self.state_to_tensor(state)
 
         if training:
+            # 训练时需要梯度，因此不使用 no_grad
             action_probs, _ = self.network(state_tensor)
         else:
+            # 测试或评估时不需要梯度
             with torch.no_grad():
                 action_probs, _ = self.network(state_tensor)
 
-        # 应用动作掩码
+        # 应用严格的动作掩码
         action_probs = self._apply_strict_action_mask(state, action_probs)
 
         if training and random.random() < self.epsilon:
-            # 修复探索：在有效动作中随机选择
-            valid_actions = (action_probs > 0).nonzero().squeeze(-1)
-            if len(valid_actions) > 0:
-                action = valid_actions[random.randint(0, len(valid_actions)-1)]
-            else:
-                action = torch.argmax(action_probs)
+            # ε-贪心探索
+            action_dist = torch.distributions.Categorical(action_probs)
+            action = action_dist.sample()
         else:
             # 贪心选择
             action = torch.argmax(action_probs)
 
-        # 重新计算log_prob
+        # 重新计算log_prob用于训练
         action_dist = torch.distributions.Categorical(action_probs)
         log_prob = action_dist.log_prob(action)
 
@@ -216,38 +207,110 @@ class OptimizedActorCriticAgent:
         masked_probs = action_probs * mask
         return masked_probs / (masked_probs.sum() + 1e-8)
     
+    def train_episode(self, episode_num: int) -> Tuple[float, int, bool]:
+        """训练一个episode"""
+        state = self.env.reset()
+        total_reward = 0.0
+        steps = 0
+        max_steps = 300  # 减少最大步数，避免无意义的长轨迹
+        
+        episode_buffer = []
+        
+        last_reward = 0  # Track the last environment reward to determine success
+        while steps < max_steps:
+            # 选择动作
+            action, log_prob = self.select_action(state, training=True)
+            
+            # 执行动作前记录当前状态
+            prev_state = state
+            
+            # 执行动作
+            next_state, reward, done = self.env.step(action)
+            last_reward = reward  # remember raw reward before shaping
+            
+            # 修复：检测碰撞的正确方法
+            # 如果奖励是-10且没有成功到达终点，说明发生了碰撞
+            crashed = (reward == -10 and not done)
+            if crashed:
+                # 环境已经将智能体重置到起点，此处不再终止episode，
+                # 允许智能体继续尝试以便从失败中学习
+                pass
+            
+            # 改进的奖励塑形
+            shaped_reward = self._improved_reward_shaping(prev_state, next_state, reward, done, steps)
+            
+            # 存储经验
+            exp = Experience(prev_state, action, shaped_reward, next_state, done, log_prob)
+            episode_buffer.append(exp)
+            
+            total_reward += reward  # 统计原始奖励
+            steps += 1
+            
+            if done:
+                break
+                
+            state = next_state
+        
+        # 将episode经验加入缓冲区
+        self.buffer.extend(episode_buffer)
+        
+        # 批量更新
+        if len(self.buffer) >= self.buffer_size:
+            self._batch_update()
+            self.buffer.clear()
+        
+        # 更新探索率
+        self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
+        
+        # Determine success based on the final environment reward indicating
+        # the goal was reached (reward == 100 from RacetrackEnv.step)
+        success = (steps < max_steps and done and last_reward == 100)
+        return total_reward, steps, success
+    
     def _improved_reward_shaping(self, state, next_state, reward, done, steps):
-        """大幅简化的奖励塑形 - 避免复杂的人工设计"""
-        bonus = 0.0
-        
-        # 只保留最基本的奖励塑形
+        """改进的奖励塑形"""
         if done and reward > 0:
-            bonus += 100  # 成功奖励
-        elif reward == -10:  # 碰撞
-            bonus -= 50   # 碰撞惩罚
+            return reward + 50  # 增加成功奖励
         
-        # 简单的进步奖励
+        # 如果reward为-10且未结束，说明发生了碰撞并被重置到起点
+        if (reward == -10 and not done) or (done and reward < 0):
+            return -20  # 碰撞惩罚
+        
+        # 进步奖励（加大权重）
         x, y, _, _ = state
         next_x, next_y, _, _ = next_state
         
         curr_dist = min([abs(x - gx) + abs(y - gy) for gx, gy in self.env.goal_positions])
         next_dist = min([abs(next_x - gx) + abs(next_y - gy) for gx, gy in self.env.goal_positions])
         
-        # 只有显著进步才给奖励
-        if curr_dist - next_dist > 1:
-            bonus += 2.0
+        progress_reward = (curr_dist - next_dist) * 3.0  # 进一步加大进步奖励
         
-        # 轻微的步数惩罚
-        bonus -= 0.1
+        # 速度奖励
+        _, _, vx, vy = next_state
+        speed_reward = min(vx + vy, 4) * 0.3
         
-        return reward + bonus
+        # 大幅减少步数惩罚
+        step_penalty = -0.02  # 从-0.05进一步减少到-0.02
+        
+        # 接近目标的指数奖励
+        proximity_bonus = 0.0
+        if next_dist <= 5:
+            proximity_bonus = (6 - next_dist) * 2.0
+        
+        # 如果在终点附近，给予额外奖励
+        if next_dist <= 2:
+            proximity_bonus += 10.0
+        
+        shaped_reward = step_penalty + progress_reward + speed_reward + proximity_bonus
+        
+        return shaped_reward
     
     def _batch_update(self):
-        """修复后的批量更新"""
-        if len(self.buffer) < self.update_frequency:
+        """批量更新网络"""
+        if len(self.buffer) == 0:
             return
         
-        self.network.train()
+        self.network.train()  # 训练模式
         
         # 准备批量数据
         states = []
@@ -272,62 +335,46 @@ class OptimizedActorCriticAgent:
         dones = torch.tensor(dones, dtype=torch.float32)
         log_probs = torch.stack(log_probs)
         
-        # 重新计算价值
-        action_probs_batch, values = self.network(states)
+        # 计算价值和下一步价值
+        _, values = self.network(states)
         _, next_values = self.network(next_states)
         
         values = values.squeeze()
         next_values = next_values.squeeze()
         
-        # 修复GAE计算
-        advantages = self._compute_gae_fixed(rewards, values, next_values, dones)
+        # 计算GAE优势
+        advantages = self._compute_gae(rewards, values, next_values, dones)
         
-        # 稳健的优势标准化
-        if len(advantages) > 1 and advantages.std() > 1e-8:
+        # 标准化优势
+        if len(advantages) > 1:
             advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
         
-        # 计算目标值
+        # 计算损失
         value_targets = advantages + values.detach()
         
-        # 分别计算损失
         critic_loss = F.mse_loss(values, value_targets)
+        actor_loss = -(log_probs * advantages.detach()).mean()
         
-        # 重新计算动作概率以获得当前策略的log_prob
-        action_dist = torch.distributions.Categorical(action_probs_batch)
-        new_log_probs = action_dist.log_prob(actions)
+        total_loss = actor_loss + 0.5 * critic_loss
         
-        actor_loss = -(new_log_probs * advantages.detach()).mean()
-        entropy = action_dist.entropy().mean()
-
-        # 调整损失权重
-        total_loss = actor_loss + 0.3 * critic_loss - self.entropy_coef * entropy
-        
-        # 梯度更新
+        # 更新网络
         self.optimizer.zero_grad()
         total_loss.backward()
-        torch.nn.utils.clip_grad_norm_(self.network.parameters(), 1.0)  # 增加梯度裁剪
+        torch.nn.utils.clip_grad_norm_(self.network.parameters(), 0.5)
         self.optimizer.step()
         
-        # 记录损失
         self.losses.append(total_loss.item())
-        self.value_losses.append(critic_loss.item())
-        self.policy_losses.append(actor_loss.item())
-        
-        # 部分清空缓冲区，保留一些经验
-        for _ in range(self.update_frequency // 2):
-            if len(self.buffer) > 0:
-                self.buffer.popleft()
     
-    def _compute_gae_fixed(self, rewards, values, next_values, dones):
-        """修复后的GAE计算"""
+    def _compute_gae(self, rewards, values, next_values, dones):
+        """计算Generalized Advantage Estimation"""
         advantages = torch.zeros_like(rewards)
         gae = 0
         
         for t in reversed(range(len(rewards))):
-            if t == len(rewards) - 1:
-                next_value = 0 if dones[t] else next_values[t]
-            else:
-                next_value = values[t + 1] * (1 - dones[t])
+            # Use the estimated value of the next state provided to this
+            # function. When the current step is terminal, there is no
+            # bootstrap value so we set it to 0.
+            next_value = 0 if dones[t] else next_values[t]
 
             delta = rewards[t] + self.gamma * next_value - values[t]
             gae = delta + self.gamma * self.gae_lambda * (1 - dones[t]) * gae
@@ -335,60 +382,13 @@ class OptimizedActorCriticAgent:
         
         return advantages
     
-    def train_episode(self, episode_num: int) -> Tuple[float, int, bool]:
-        """修复后的训练episode"""
-        state = self.env.reset()
-        total_reward = 0.0
-        steps = 0
-        max_steps = 200  # 进一步减少最大步数
-        
-        episode_buffer = []
-        
-        last_reward = 0
-        while steps < max_steps:
-            action, log_prob = self.select_action(state, training=True)
-            prev_state = state
-            next_state, reward, done = self.env.step(action)
-            last_reward = reward
-            
-            # 简化的奖励塑形
-            shaped_reward = self._improved_reward_shaping(prev_state, next_state, reward, done, steps)
-            
-            exp = Experience(prev_state, action, shaped_reward, next_state, done, log_prob)
-            episode_buffer.append(exp)
-            
-            total_reward += reward
-            steps += 1
-            
-            if done:
-                break
-                
-            state = next_state
-        
-        # 添加episode经验到缓冲区
-        self.buffer.extend(episode_buffer)
-        
-        # 更频繁的更新
-        if len(self.buffer) >= self.update_frequency:
-            self._batch_update()
-        
-        # 更慢的探索衰减
-        if episode_num % 10 == 0:  # 每10个episode才衰减一次
-            self.epsilon = max(self.epsilon_min, self.epsilon * self.epsilon_decay)
-        
-        success = (steps < max_steps and done and last_reward == 100)
-        return total_reward, steps, success
-    
     def train(self, n_episodes: int, verbose: bool = True) -> Tuple[List[float], List[int], List[float]]:
-        """修复后的训练函数 - 添加更多监控"""
+        """训练智能体"""
         self.episode_rewards = []
         self.episode_steps = []
         self.success_rate = []
         
         success_window = deque(maxlen=100)
-        reward_window = deque(maxlen=50)
-        
-        print("开始训练，监控关键指标...")
         
         for episode in range(n_episodes):
             reward, steps, success = self.train_episode(episode)
@@ -396,36 +396,20 @@ class OptimizedActorCriticAgent:
             self.episode_steps.append(steps)
             
             success_window.append(1 if success else 0)
-            reward_window.append(reward)
             current_success_rate = np.mean(success_window)
             self.success_rate.append(current_success_rate)
             
             # 学习率调度
-            if episode % 1000 == 0 and episode > 0:
+            if episode % 500 == 0 and episode > 0:
                 self.scheduler.step()
             
-            # 详细的监控输出
-            if verbose and (episode + 1) % 25 == 0:  # 更频繁的输出
-                avg_reward = np.mean(reward_window)
-                avg_steps = np.mean(self.episode_steps[-25:])
+            if verbose and (episode + 1) % 50 == 0:
+                avg_reward = np.mean(self.episode_rewards[-50:])
+                avg_steps = np.mean(self.episode_steps[-50:])
                 avg_loss = np.mean(self.losses[-50:]) if self.losses else 0
-                avg_value_loss = np.mean(self.value_losses[-50:]) if self.value_losses else 0
-                avg_policy_loss = np.mean(self.policy_losses[-50:]) if self.policy_losses else 0
-                
-                print(f"Episode {episode + 1:4d}: "
-                      f"奖励={avg_reward:6.1f}, 步数={avg_steps:5.1f}, "
-                      f"成功率={current_success_rate:.3f}, ε={self.epsilon:.3f}")
-                print(f"              损失: 总={avg_loss:.4f}, "
-                      f"价值={avg_value_loss:.4f}, 策略={avg_policy_loss:.4f}")
-                
-                # 诊断信息
-                if episode > 100:
-                    recent_window = list(success_window)[-25:]  # 修复：转换为list再切片
-                    recent_success = np.mean(recent_window)
-                    if recent_success < 0.05:
-                        print(f"⚠️  警告: 最近25轮成功率仅{recent_success:.3f}!")
-                    elif recent_success > 0.5:
-                        print(f"🎉 优秀: 最近25轮成功率达到{recent_success:.3f}!")
+                print(f"Episode {episode + 1}: 平均奖励 = {avg_reward:.2f}, "
+                      f"平均步数 = {avg_steps:.2f}, 成功率 = {current_success_rate:.3f}, "
+                      f"损失 = {avg_loss:.4f}, ε = {self.epsilon:.3f}")
         
         return self.episode_rewards, self.episode_steps, self.success_rate
     
@@ -469,8 +453,6 @@ class OptimizedActorCriticAgent:
             'episode_steps': self.episode_steps,
             'success_rate': self.success_rate,
             'losses': self.losses,
-            'value_losses': self.value_losses,
-            'policy_losses': self.policy_losses,
             'epsilon': self.epsilon
         }
         torch.save(save_dict, filepath)
@@ -483,8 +465,8 @@ class OptimizedActorCriticAgent:
 
 
 def main():
-    """修复后的主函数"""
-    print("=== 修复后的Actor-Critic算法演示 ===")
+    """主函数"""
+    print("=== 优化后的Actor-Critic算法演示 ===")
     
     # 创建环境
     env = RacetrackEnv(track_size=(32, 17), max_speed=5)
@@ -493,64 +475,47 @@ def main():
     print(f"  - 最大速度: {env.max_speed}")
     print(f"  - 动作数量: {env.n_actions}")
     
-    # 创建修复的智能体
-    print("\n=== 修复后的Actor-Critic智能体 ===")
+    # 创建优化的智能体
+    print("\n=== 优化的Actor-Critic智能体 ===")
     agent = OptimizedActorCriticAgent(
         env=env,
-        lr=0.001,          # 降低学习率
+        lr=0.003,          # 提高学习率
         gamma=0.99,
-        hidden_dim=128,    # 保持网络大小
-        buffer_size=128,   # 增大缓冲区
+        hidden_dim=128,    # 减小网络大小
+        buffer_size=64,    # 批量更新
         gae_lambda=0.95    # GAE
     )
     
-    print(f"主要修复：")
-    print(f"  - 修复探索策略（慢衰减，保持最小探索）")
-    print(f"  - 大幅简化奖励塑形（避免误导）")
-    print(f"  - 修复GAE计算（正确的bootstrap）")
-    print(f"  - 改进网络更新（更频繁，部分保留经验）")
-    print(f"  - 添加训练稳定性措施（梯度裁剪，权重衰减）")
-    print(f"  - 增强监控和诊断功能")
+    print(f"主要优化：")
+    print(f"  - 共享网络架构，减少参数")
+    print(f"  - 批量更新，减少方差")
+    print(f"  - 严格动作掩码")
+    print(f"  - ε-贪心探索策略")
+    print(f"  - GAE优势估计")
+    print(f"  - 修复碰撞处理")
+    print(f"  - 改进奖励塑形")
     
     # 训练前测试
     print("\n=== 训练前测试 ===")
     reward_before, steps_before, path_before, success_before = agent.test_episode()
     print(f"训练前性能: 奖励 = {reward_before:.2f}, 步数 = {steps_before}, 成功 = {success_before}")
     
-    # 修复后的训练
-    print(f"\n=== 开始修复后的训练 ===")
-    n_episodes = 1500  # 稍微增加训练轮数
+    # 训练智能体
+    print(f"\n=== 开始训练优化版Actor-Critic ===")
+    n_episodes = 1000  # 预期更快收敛
     rewards, steps, success_rates = agent.train(n_episodes=n_episodes, verbose=True)
     
-    # 详细的训练结果分析
-    print(f"\n=== 修复后的训练结果分析 ===")
+    # 分析训练结果
+    print(f"\n=== 训练结果分析 ===")
     print(f"总训练回合数: {n_episodes}")
-    
-    # 分阶段分析
-    if len(rewards) >= 100:
-        early_success = np.mean(success_rates[25:75])  # 早期
-        mid_success = np.mean(success_rates[250:350]) if len(success_rates) > 350 else 0  # 中期
-        late_success = np.mean(success_rates[-50:])   # 后期
-        
-        print(f"早期成功率 (25-75轮): {early_success:.3f}")
-        print(f"中期成功率 (250-350轮): {mid_success:.3f}")
-        print(f"后期成功率 (最后50轮): {late_success:.3f}")
-        
-        if late_success > early_success + 0.1:
-            print("✅ 训练成功：后期性能显著提升")
-        elif late_success < early_success - 0.1:
-            print("❌ 训练失败：出现性能退化")
-        else:
-            print("⚠️ 训练一般：性能基本稳定")
-    
     print(f"最终50回合平均奖励: {np.mean(rewards[-50:]):.2f}")
     print(f"最终50回合平均步数: {np.mean(steps[-50:]):.2f}")
-    print(f"最终探索率: {agent.epsilon:.3f}")
+    print(f"最终50回合成功率: {np.mean(success_rates[-50:]):.3f}")
     
-    # 训练后详细测试
-    print("\n=== 修复后详细测试 ===")
+    # 训练后测试
+    print("\n=== 训练后测试 ===")
     test_results = []
-    for i in range(20):  # 增加测试次数
+    for i in range(10):
         reward, steps, path, success = agent.test_episode()
         test_results.append((reward, steps, success))
     
@@ -558,46 +523,26 @@ def main():
     avg_test_steps = np.mean([r[1] for r in test_results])
     test_success_rate = np.mean([r[2] for r in test_results])
     
-    print(f"测试结果（20次平均）:")
+    print(f"测试结果（10次平均）:")
     print(f"  - 平均奖励: {avg_test_reward:.2f}")
     print(f"  - 平均步数: {avg_test_steps:.2f}")
     print(f"  - 成功率: {test_success_rate:.3f}")
     
-    # 性能对比和诊断
-    print(f"\n=== 性能提升和诊断 ===")
+    # 性能对比
+    print(f"\n=== 性能提升 ===")
     print(f"奖励提升: {avg_test_reward - reward_before:.2f}")
     print(f"步数变化: {avg_test_steps - steps_before:.0f}")
-    
-    if test_success_rate > 0.5:
-        print("🎉 修复成功！测试成功率超过50%")
-    elif test_success_rate > 0.2:
-        print("✅ 修复有效，测试成功率有显著提升")
-    elif test_success_rate > 0.05:
-        print("⚠️ 修复部分有效，但仍需改进")
-    else:
-        print("❌ 修复失败，需要进一步诊断")
-        
-        # 失败诊断
-        print("\n🔍 失败诊断:")
-        if agent.epsilon < 0.1:
-            print("  - 探索率过低，可能陷入局部最优")
-        if len(agent.losses) > 0 and np.mean(agent.losses[-50:]) > 1.0:
-            print("  - 损失过高，训练不稳定")
-        if np.std(rewards[-100:]) < 10:
-            print("  - 奖励方差过小，可能学习停滞")
+    print(f"成功率: {test_success_rate:.3f}")
     
     # 可视化测试
     print("\n=== 可视化测试 ===")
     print("运行可视化测试...")
-    final_reward, final_steps, final_path, final_success = agent.test_episode(render=True)
-    print(f"可视化测试: 奖励={final_reward:.1f}, 步数={final_steps}, 成功={final_success}")
+    agent.test_episode(render=True)
     
     # 保存模型
-    model_path = "fixed_actor_critic_model.pth"
+    model_path = "optimized_actor_critic_model.pth"
     agent.save_model(model_path)
-    print(f"\n修复后的模型已保存到: {model_path}")
-    
-    return agent, test_results
+    print(f"\n模型已保存到: {model_path}")
 
 
 if __name__ == "__main__":
