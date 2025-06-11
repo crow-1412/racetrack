@@ -25,6 +25,20 @@ import random
 from collections import deque
 from racetrack_env import RacetrackEnv
 
+# 设置随机种子确保结果可重现
+RANDOM_SEED = 42
+torch.manual_seed(RANDOM_SEED)
+np.random.seed(RANDOM_SEED)
+random.seed(RANDOM_SEED)
+if torch.cuda.is_available():
+    torch.cuda.manual_seed(RANDOM_SEED)
+    torch.cuda.manual_seed_all(RANDOM_SEED)
+# 确保PyTorch的确定性行为
+torch.backends.cudnn.deterministic = True
+torch.backends.cudnn.benchmark = False
+
+print(f"🎲 随机种子已设置为: {RANDOM_SEED}")
+
 
 class SharedNetwork(nn.Module):
     """
@@ -635,8 +649,10 @@ def main_fixed_degradation():
     2. 最佳模型保护：自动保存并恢复历史最佳性能
     3. 性能监控：实时检测退化并采取措施
     4. 分离优化器：Actor和Critic使用不同的学习率
+    5. 随机种子控制，确保可重现性
     """
-    print("=== 解决性能退化问题的训练 ===")
+    print("=== 解决性能退化问题的训练（随机种子版本）===")
+    print(f"🎲 使用固定随机种子: {RANDOM_SEED}")
     
     # 创建环境
     env = RacetrackEnv(track_size=(32, 17), max_speed=5)
