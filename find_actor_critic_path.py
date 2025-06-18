@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pickle
 import json
 import torch
-from actor_critic_improved_fixed import OptimizedActorCriticAgent
+from actor_critic import OptimizedActorCriticAgent
 from racetrack_env import RacetrackEnv
 
 def load_and_test_actor_critic():

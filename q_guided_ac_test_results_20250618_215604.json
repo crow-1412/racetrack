@@ -1,0 +1,4939 @@
+{
+  "timestamp": "20250618_215604",
+  "training_results": {
+    "episodes": [
+      50,
+      100,
+      150,
+      200,
+      250,
+      300,
+      350,
+      400,
+      450,
+      500,
+      550,
+      600,
+      650,
+      700,
+      750,
+      800,
+      850,
+      900
+    ],
+    "success_rates": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.1,
+      0.1,
+      1.0,
+      0.8,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "avg_rewards": [
+      -935.3165306122457,
+      -409.7548979591852,
+      -363.87448979591716,
+      -300.9538775510204,
+      -267.2522448979589,
+      -273.890408163265,
+      40.92,
+      -16.618979591836585,
+      68.41,
+      80.69367346938775,
+      79.4469387755102,
+      79.8661224489796,
+      79.19510204081632,
+      77.67428571428572,
+      70.16714285714286,
+      65.11571428571429,
+      58.119591836734685,
+      77.74673469387753
+    ],
+    "phases": [
+      "q_learning",
+      "q_learning",
+      "q_learning",
+      "q_learning",
+      "q_learning",
+      "q_learning",
+      "q_learning",
+      "q_learning",
+      "hybrid",
+      "hybrid",
+      "hybrid",
+      "hybrid",
+      "hybrid",
+      "hybrid",
+      "actor_critic",
+      "actor_critic",
+      "actor_critic",
+      "actor_critic"
+    ],
+    "q_table_sizes": [
+      3252,
+      4972,
+      6636,
+      7842,
+      8904,
+      9666,
+      10234,
+      10432,
+      10539,
+      10649,
+      10708,
+      10746,
+      10784,
+      10816,
+      10816,
+      10816,
+      10816,
+      10816
+    ]
+  },
+  "final_results": [
+    {
+      "reward": 87.89795918367346,
+      "steps": 14,
+      "success": true,
+      "path_length": 15
+    },
+    {
+      "reward": 90.61020408163266,
+      "steps": 11,
+      "success": true,
+      "path_length": 12
+    },
+    {
+      "reward": 31.014285714285734,
+      "steps": 26,
+      "success": true,
+      "path_length": 27
+    },
+    {
+      "reward": 88.64285714285714,
+      "steps": 13,
+      "success": true,
+      "path_length": 14
+    },
+    {
+      "reward": 58.71020408163264,
+      "steps": 16,
+      "success": true,
+      "path_length": 17
+    },
+    {
+      "reward": 90.60816326530612,
+      "steps": 11,
+      "success": true,
+      "path_length": 12
+    },
+    {
+      "reward": 88.73265306122448,
+      "steps": 13,
+      "success": true,
+      "path_length": 14
+    },
+    {
+      "reward": 88.73469387755102,
+      "steps": 13,
+      "success": true,
+      "path_length": 14
+    },
+    {
+      "reward": 90.60816326530612,
+      "steps": 11,
+      "success": true,
+      "path_length": 12
+    },
+    {
+      "reward": 22.45714285714287,
+      "steps": 35,
+      "success": true,
+      "path_length": 36
+    },
+    {
+      "reward": 56.76938775510204,
+      "steps": 18,
+      "success": true,
+      "path_length": 19
+    },
+    {
+      "reward": 59.67142857142857,
+      "steps": 15,
+      "success": true,
+      "path_length": 16
+    },
+    {
+      "reward": 39.818367346938764,
+      "steps": 36,
+      "success": true,
+      "path_length": 37
+    },
+    {
+      "reward": 42.67551020408163,
+      "steps": 33,
+      "success": true,
+      "path_length": 34
+    },
+    {
+      "reward": 79.67551020408163,
+      "steps": 13,
+      "success": true,
+      "path_length": 14
+    },
+    {
+      "reward": 88.64285714285714,
+      "steps": 13,
+      "success": true,
+      "path_length": 14
+    },
+    {
+      "reward": 7.955102040816328,
+      "steps": 41,
+      "success": true,
+      "path_length": 42
+    },
+    {
+      "reward": 9.473469387755117,
+      "steps": 49,
+      "success": true,
+      "path_length": 50
+    },
+    {
+      "reward": 55.76734693877551,
+      "steps": 19,
+      "success": true,
+      "path_length": 20
+    },
+    {
+      "reward": 70.25714285714285,
+      "steps": 23,
+      "success": true,
+      "path_length": 24
+    }
+  ],
+  "q_guided_results": [
+    {
+      "reward": 86.73061224489796,
+      "steps": 15,
+      "success": true
+    },
+    {
+      "reward": 75.84285714285714,
+      "steps": 17,
+      "success": true
+    },
+    {
+      "reward": 77.86326530612246,
+      "steps": 15,
+      "success": true
+    },
+    {
+      "reward": 37.17959183673469,
+      "steps": 29,
+      "success": true
+    },
+    {
+      "reward": 63.90408163265305,
+      "steps": 20,
+      "success": true
+    },
+    {
+      "reward": 74.91224489795918,
+      "steps": 18,
+      "success": true
+    },
+    {
+      "reward": 50.98775510204081,
+      "steps": 24,
+      "success": true
+    },
+    {
+      "reward": 88.7265306122449,
+      "steps": 13,
+      "success": true
+    },
+    {
+      "reward": 87.75510204081633,
+      "steps": 14,
+      "success": true
+    },
+    {
+      "reward": 43.912244897959184,
+      "steps": 22,
+      "success": true
+    },
+    {
+      "reward": 76.82244897959184,
+      "steps": 16,
+      "success": true
+    },
+    {
+      "reward": 89.68367346938776,
+      "steps": 12,
+      "success": true
+    },
+    {
+      "reward": 87.75918367346938,
+      "steps": 14,
+      "success": true
+    },
+    {
+      "reward": 63.85510204081632,
+      "steps": 20,
+      "success": true
+    },
+    {
+      "reward": 62.18163265306122,
+      "steps": 22,
+      "success": true
+    },
+    {
+      "reward": 88.73061224489796,
+      "steps": 13,
+      "success": true
+    },
+    {
+      "reward": 76.73673469387755,
+      "steps": 16,
+      "success": true
+    },
+    {
+      "reward": 88.73061224489796,
+      "steps": 13,
+      "success": true
+    },
+    {
+      "reward": 78.72244897959183,
+      "steps": 14,
+      "success": true
+    },
+    {
+      "reward": 89.69183673469388,
+      "steps": 12,
+      "success": true
+    }
+  ],
+  "traditional_results": [
+    {
+      "reward": -294.9755102040816,
+      "steps": 300,
+      "success": false
+    },
+    {
+      "reward": -285.91836734693896,
+      "steps": 300,
+      "success": false
+    },
+    {
+      "reward": 83.33265306122449,
+      "steps": 19,
+      "success": true
+    },
+    {
+      "reward": -303.9346938775508,
+      "steps": 300,
+      "success": false
+    },
+    {
+      "reward": -294.97755102040816,
+      "steps": 300,
+      "success": false
+    },
+    {
+      "reward": 52.81428571428571,
+      "steps": 32,
+      "success": true
+    },
+    {
+      "reward": 81.42244897959183,
+      "steps": 21,
+      "success": true
+    },
+    {
+      "reward": 68.51428571428572,
+      "steps": 25,
+      "success": true
+    },
+    {
+      "reward": 80.4938775510204,
+      "steps": 22,
+      "success": true
+    },
+    {
+      "reward": 80.48163265306123,
+      "steps": 22,
+      "success": true
+    },
+    {
+      "reward": 59.022448979591836,
+      "steps": 35,
+      "success": true
+    },
+    {
+      "reward": 79.4591836734694,
+      "steps": 23,
+      "success": true
+    },
+    {
+      "reward": -294.93673469387755,
+      "steps": 300,
+      "success": false
+    },
+    {
+      "reward": 80.46530612244898,
+      "steps": 22,
+      "success": true
+    },
+    {
+      "reward": 84.26938775510204,
+      "steps": 18,
+      "success": true
+    },
+    {
+      "reward": 59.48367346938775,
+      "steps": 25,
+      "success": true
+    },
+    {
+      "reward": 78.51428571428572,
+      "steps": 24,
+      "success": true
+    },
+    {
+      "reward": 80.5061224489796,
+      "steps": 22,
+      "success": true
+    },
+    {
+      "reward": 56.626530612244906,
+      "steps": 28,
+      "success": true
+    },
+    {
+      "reward": 80.4795918367347,
+      "steps": 22,
+      "success": true
+    }
+  ],
+  "phase_results": {
+    "q_learning": [
+      {
+        "episode": 0,
+        "success": false,
+        "reward": -696.5857142857153
+      },
+      {
+        "episode": 1,
+        "success": false,
+        "reward": -867.8653061224499
+      },
+      {
+        "episode": 2,
+        "success": false,
+        "reward": -759.5204081632662
+      },
+      {
+        "episode": 3,
+        "success": false,
+        "reward": -777.3673469387767
+      },
+      {
+        "episode": 4,
+        "success": false,
+        "reward": -641.781632653061
+      },
+      {
+        "episode": 5,
+        "success": false,
+        "reward": -740.8122448979598
+      },
+      {
+        "episode": 6,
+        "success": false,
+        "reward": -704.2346938775518
+      },
+      {
+        "episode": 7,
+        "success": false,
+        "reward": -704.3775510204067
+      },
+      {
+        "episode": 8,
+        "success": false,
+        "reward": -776.4408163265306
+      },
+      {
+        "episode": 9,
+        "success": false,
+        "reward": -713.2285714285719
+      },
+      {
+        "episode": 10,
+        "success": false,
+        "reward": -731.6081632653068
+      },
+      {
+        "episode": 11,
+        "success": false,
+        "reward": -704.5367346938773
+      },
+      {
+        "episode": 12,
+        "success": false,
+        "reward": -731.6510204081642
+      },
+      {
+        "episode": 13,
+        "success": false,
+        "reward": -740.4612244897958
+      },
+      {
+        "episode": 14,
+        "success": false,
+        "reward": -649.7877551020406
+      },
+      {
+        "episode": 15,
+        "success": false,
+        "reward": -686.3040816326529
+      },
+      {
+        "episode": 16,
+        "success": false,
+        "reward": -759.369387755102
+      },
+      {
+        "episode": 17,
+        "success": false,
+        "reward": -767.9979591836743
+      },
+      {
+        "episode": 18,
+        "success": false,
+        "reward": -713.3081632653063
+      },
+      {
+        "episode": 19,
+        "success": false,
+        "reward": -704.4346938775512
+      },
+      {
+        "episode": 20,
+        "success": false,
+        "reward": -758.3367346938785
+      },
+      {
+        "episode": 21,
+        "success": false,
+        "reward": -668.0632653061233
+      },
+      {
+        "episode": 22,
+        "success": false,
+        "reward": -685.9510204081633
+      },
+      {
+        "episode": 23,
+        "success": false,
+        "reward": -722.1999999999998
+      },
+      {
+        "episode": 24,
+        "success": false,
+        "reward": -658.9673469387758
+      },
+      {
+        "episode": 25,
+        "success": false,
+        "reward": -767.5285714285715
+      },
+      {
+        "episode": 26,
+        "success": false,
+        "reward": -785.787755102042
+      },
+      {
+        "episode": 27,
+        "success": false,
+        "reward": -713.3428571428576
+      },
+      {
+        "episode": 28,
+        "success": false,
+        "reward": -713.2285714285719
+      },
+      {
+        "episode": 29,
+        "success": false,
+        "reward": -731.3632653061221
+      },
+      {
+        "episode": 30,
+        "success": false,
+        "reward": -713.4204081632657
+      },
+      {
+        "episode": 31,
+        "success": false,
+        "reward": -704.2959183673478
+      },
+      {
+        "episode": 32,
+        "success": false,
+        "reward": -631.8489795918366
+      },
+      {
+        "episode": 33,
+        "success": false,
+        "reward": -777.2306122448996
+      },
+      {
+        "episode": 34,
+        "success": false,
+        "reward": -612.6102040816317
+      },
+      {
+        "episode": 35,
+        "success": false,
+        "reward": -676.8836734693884
+      },
+      {
+        "episode": 36,
+        "success": false,
+        "reward": -713.7489795918375
+      },
+      {
+        "episode": 37,
+        "success": true,
+        "reward": -477.7734693877552
+      },
+      {
+        "episode": 38,
+        "success": false,
+        "reward": -776.9367346938782
+      },
+      {
+        "episode": 39,
+        "success": false,
+        "reward": -740.4346938775516
+      },
+      {
+        "episode": 40,
+        "success": false,
+        "reward": -713.3163265306124
+      },
+      {
+        "episode": 41,
+        "success": false,
+        "reward": -649.6530612244899
+      },
+      {
+        "episode": 42,
+        "success": true,
+        "reward": -538.1693877551023
+      },
+      {
+        "episode": 43,
+        "success": false,
+        "reward": -758.1673469387755
+      },
+      {
+        "episode": 44,
+        "success": false,
+        "reward": -739.9959183673473
+      },
+      {
+        "episode": 45,
+        "success": false,
+        "reward": -613.1571428571431
+      },
+      {
+        "episode": 46,
+        "success": false,
+        "reward": -758.4734693877551
+      },
+      {
+        "episode": 47,
+        "success": true,
+        "reward": -154.4061224489796
+      },
+      {
+        "episode": 48,
+        "success": true,
+        "reward": 16.616326530612227
+      },
+      {
+        "episode": 49,
+        "success": false,
+        "reward": -686.0775510204084
+      },
+      {
+        "episode": 50,
+        "success": false,
+        "reward": -694.8755102040819
+      },
+      {
+        "episode": 51,
+        "success": true,
+        "reward": -254.7265306122447
+      },
+      {
+        "episode": 52,
+        "success": false,
+        "reward": -704.132653061225
+      },
+      {
+        "episode": 53,
+        "success": false,
+        "reward": -712.5816326530614
+      },
+      {
+        "episode": 54,
+        "success": false,
+        "reward": -729.9387755102043
+      },
+      {
+        "episode": 55,
+        "success": true,
+        "reward": -63.96734693877562
+      },
+      {
+        "episode": 56,
+        "success": false,
+        "reward": -676.4755102040815
+      },
+      {
+        "episode": 57,
+        "success": false,
+        "reward": -730.4734693877558
+      },
+      {
+        "episode": 58,
+        "success": false,
+        "reward": -713.2673469387748
+      },
+      {
+        "episode": 59,
+        "success": true,
+        "reward": 1.9673469387755063
+      },
+      {
+        "episode": 60,
+        "success": true,
+        "reward": -652.1448979591835
+      },
+      {
+        "episode": 61,
+        "success": true,
+        "reward": -356.2653061224486
+      },
+      {
+        "episode": 62,
+        "success": true,
+        "reward": -525.8428571428575
+      },
+      {
+        "episode": 63,
+        "success": false,
+        "reward": -713.2816326530616
+      },
+      {
+        "episode": 64,
+        "success": false,
+        "reward": -685.324489795918
+      },
+      {
+        "episode": 65,
+        "success": false,
+        "reward": -740.7408163265304
+      },
+      {
+        "episode": 66,
+        "success": false,
+        "reward": -649.8795918367342
+      },
+      {
+        "episode": 67,
+        "success": false,
+        "reward": -740.6632653061226
+      },
+      {
+        "episode": 68,
+        "success": false,
+        "reward": -785.1163265306124
+      },
+      {
+        "episode": 69,
+        "success": false,
+        "reward": -721.7897959183678
+      },
+      {
+        "episode": 70,
+        "success": false,
+        "reward": -722.1673469387754
+      },
+      {
+        "episode": 71,
+        "success": false,
+        "reward": -694.6979591836745
+      },
+      {
+        "episode": 72,
+        "success": false,
+        "reward": -803.3244897959192
+      },
+      {
+        "episode": 73,
+        "success": false,
+        "reward": -648.8775510204081
+      },
+      {
+        "episode": 74,
+        "success": false,
+        "reward": -740.3693877551027
+      },
+      {
+        "episode": 75,
+        "success": false,
+        "reward": -731.1653061224488
+      },
+      {
+        "episode": 76,
+        "success": false,
+        "reward": -749.0755102040819
+      },
+      {
+        "episode": 77,
+        "success": false,
+        "reward": -712.7102040816329
+      },
+      {
+        "episode": 78,
+        "success": false,
+        "reward": -649.1040816326521
+      },
+      {
+        "episode": 79,
+        "success": true,
+        "reward": -328.64081632653074
+      },
+      {
+        "episode": 80,
+        "success": false,
+        "reward": -657.8061224489793
+      },
+      {
+        "episode": 81,
+        "success": true,
+        "reward": -322.0285714285712
+      },
+      {
+        "episode": 82,
+        "success": false,
+        "reward": -676.7265306122442
+      },
+      {
+        "episode": 83,
+        "success": false,
+        "reward": -685.0959183673474
+      },
+      {
+        "episode": 84,
+        "success": false,
+        "reward": -704.108163265307
+      },
+      {
+        "episode": 85,
+        "success": false,
+        "reward": -685.3346938775511
+      },
+      {
+        "episode": 86,
+        "success": false,
+        "reward": -657.1673469387755
+      },
+      {
+        "episode": 87,
+        "success": true,
+        "reward": -278.13265306122435
+      },
+      {
+        "episode": 88,
+        "success": true,
+        "reward": 47.1530612244898
+      },
+      {
+        "episode": 89,
+        "success": false,
+        "reward": -676.9142857142859
+      },
+      {
+        "episode": 90,
+        "success": true,
+        "reward": -190.16938775510215
+      },
+      {
+        "episode": 91,
+        "success": false,
+        "reward": -675.9979591836734
+      },
+      {
+        "episode": 92,
+        "success": false,
+        "reward": -721.7734693877549
+      },
+      {
+        "episode": 93,
+        "success": false,
+        "reward": -758.1061224489802
+      },
+      {
+        "episode": 94,
+        "success": true,
+        "reward": -289.65306122448953
+      },
+      {
+        "episode": 95,
+        "success": false,
+        "reward": -721.6795918367349
+      },
+      {
+        "episode": 96,
+        "success": false,
+        "reward": -677.2061224489801
+      },
+      {
+        "episode": 97,
+        "success": true,
+        "reward": -47.60408163265302
+      },
+      {
+        "episode": 98,
+        "success": false,
+        "reward": -666.9653061224492
+      },
+      {
+        "episode": 99,
+        "success": true,
+        "reward": -301.1408163265305
+      },
+      {
+        "episode": 100,
+        "success": true,
+        "reward": 61.17755102040816
+      },
+      {
+        "episode": 101,
+        "success": false,
+        "reward": -694.5938775510209
+      },
+      {
+        "episode": 102,
+        "success": false,
+        "reward": -667.1224489795925
+      },
+      {
+        "episode": 103,
+        "success": true,
+        "reward": -180.67142857142858
+      },
+      {
+        "episode": 104,
+        "success": false,
+        "reward": -767.2428571428577
+      },
+      {
+        "episode": 105,
+        "success": true,
+        "reward": -129.96326530612242
+      },
+      {
+        "episode": 106,
+        "success": false,
+        "reward": -711.4224489795922
+      },
+      {
+        "episode": 107,
+        "success": false,
+        "reward": -658.2489795918366
+      },
+      {
+        "episode": 108,
+        "success": true,
+        "reward": -513.363265306123
+      },
+      {
+        "episode": 109,
+        "success": false,
+        "reward": -639.5591836734703
+      },
+      {
+        "episode": 110,
+        "success": false,
+        "reward": -676.4795918367353
+      },
+      {
+        "episode": 111,
+        "success": false,
+        "reward": -721.9244897959185
+      },
+      {
+        "episode": 112,
+        "success": false,
+        "reward": -676.5306122448976
+      },
+      {
+        "episode": 113,
+        "success": false,
+        "reward": -676.1571428571423
+      },
+      {
+        "episode": 114,
+        "success": true,
+        "reward": -41.96326530612251
+      },
+      {
+        "episode": 115,
+        "success": false,
+        "reward": -702.8265306122453
+      },
+      {
+        "episode": 116,
+        "success": true,
+        "reward": -183.33877551020396
+      },
+      {
+        "episode": 117,
+        "success": false,
+        "reward": -594.3530612244899
+      },
+      {
+        "episode": 118,
+        "success": false,
+        "reward": -740.273469387756
+      },
+      {
+        "episode": 119,
+        "success": false,
+        "reward": -748.4040816326544
+      },
+      {
+        "episode": 120,
+        "success": true,
+        "reward": 43.11428571428573
+      },
+      {
+        "episode": 121,
+        "success": true,
+        "reward": -392.01224489795885
+      },
+      {
+        "episode": 122,
+        "success": false,
+        "reward": -702.9775510204081
+      },
+      {
+        "episode": 123,
+        "success": false,
+        "reward": -730.4775510204083
+      },
+      {
+        "episode": 124,
+        "success": true,
+        "reward": -49.40408163265306
+      },
+      {
+        "episode": 125,
+        "success": false,
+        "reward": -711.9510204081631
+      },
+      {
+        "episode": 126,
+        "success": false,
+        "reward": -784.2387755102043
+      },
+      {
+        "episode": 127,
+        "success": true,
+        "reward": -17.628571428571462
+      },
+      {
+        "episode": 128,
+        "success": false,
+        "reward": -703.4306122448983
+      },
+      {
+        "episode": 129,
+        "success": false,
+        "reward": -666.8673469387755
+      },
+      {
+        "episode": 130,
+        "success": false,
+        "reward": -630.1653061224482
+      },
+      {
+        "episode": 131,
+        "success": false,
+        "reward": -730.528571428572
+      },
+      {
+        "episode": 132,
+        "success": false,
+        "reward": -684.4163265306127
+      },
+      {
+        "episode": 133,
+        "success": false,
+        "reward": -593.7224489795915
+      },
+      {
+        "episode": 134,
+        "success": false,
+        "reward": -667.232653061225
+      },
+      {
+        "episode": 135,
+        "success": true,
+        "reward": 83.23061224489796
+      },
+      {
+        "episode": 136,
+        "success": false,
+        "reward": -657.5346938775502
+      },
+      {
+        "episode": 137,
+        "success": false,
+        "reward": -667.0816326530612
+      },
+      {
+        "episode": 138,
+        "success": true,
+        "reward": -405.7836734693875
+      },
+      {
+        "episode": 139,
+        "success": true,
+        "reward": -179.16122448979593
+      },
+      {
+        "episode": 140,
+        "success": false,
+        "reward": -612.6816326530604
+      },
+      {
+        "episode": 141,
+        "success": false,
+        "reward": -648.1469387755096
+      },
+      {
+        "episode": 142,
+        "success": false,
+        "reward": -675.7714285714287
+      },
+      {
+        "episode": 143,
+        "success": false,
+        "reward": -666.9061224489798
+      },
+      {
+        "episode": 144,
+        "success": false,
+        "reward": -648.8326530612247
+      },
+      {
+        "episode": 145,
+        "success": false,
+        "reward": -648.5775510204079
+      },
+      {
+        "episode": 146,
+        "success": false,
+        "reward": -648.5693877551006
+      },
+      {
+        "episode": 147,
+        "success": false,
+        "reward": -703.2653061224484
+      },
+      {
+        "episode": 148,
+        "success": false,
+        "reward": -648.6938775510207
+      },
+      {
+        "episode": 149,
+        "success": false,
+        "reward": -648.7163265306124
+      },
+      {
+        "episode": 150,
+        "success": true,
+        "reward": 81.3
+      },
+      {
+        "episode": 151,
+        "success": true,
+        "reward": -158.05306122448985
+      },
+      {
+        "episode": 152,
+        "success": false,
+        "reward": -576.6714285714282
+      },
+      {
+        "episode": 153,
+        "success": false,
+        "reward": -603.4040816326531
+      },
+      {
+        "episode": 154,
+        "success": false,
+        "reward": -649.2346938775509
+      },
+      {
+        "episode": 155,
+        "success": false,
+        "reward": -620.8224489795912
+      },
+      {
+        "episode": 156,
+        "success": false,
+        "reward": -631.4306122448979
+      },
+      {
+        "episode": 157,
+        "success": true,
+        "reward": -80.69591836734688
+      },
+      {
+        "episode": 158,
+        "success": true,
+        "reward": -311.41836734693874
+      },
+      {
+        "episode": 159,
+        "success": false,
+        "reward": -711.812244897959
+      },
+      {
+        "episode": 160,
+        "success": true,
+        "reward": -428.2448979591833
+      },
+      {
+        "episode": 161,
+        "success": true,
+        "reward": -260.8714285714286
+      },
+      {
+        "episode": 162,
+        "success": false,
+        "reward": -666.4306122448982
+      },
+      {
+        "episode": 163,
+        "success": true,
+        "reward": -442.88367346938753
+      },
+      {
+        "episode": 164,
+        "success": false,
+        "reward": -748.9734693877556
+      },
+      {
+        "episode": 165,
+        "success": false,
+        "reward": -712.7387755102044
+      },
+      {
+        "episode": 166,
+        "success": false,
+        "reward": -657.8836734693882
+      },
+      {
+        "episode": 167,
+        "success": true,
+        "reward": -339.6408163265305
+      },
+      {
+        "episode": 168,
+        "success": false,
+        "reward": -603.7469387755098
+      },
+      {
+        "episode": 169,
+        "success": false,
+        "reward": -684.6142857142856
+      },
+      {
+        "episode": 170,
+        "success": true,
+        "reward": -128.3081632653061
+      },
+      {
+        "episode": 171,
+        "success": false,
+        "reward": -648.8163265306124
+      },
+      {
+        "episode": 172,
+        "success": false,
+        "reward": -730.5795918367355
+      },
+      {
+        "episode": 173,
+        "success": false,
+        "reward": -702.4795918367336
+      },
+      {
+        "episode": 174,
+        "success": true,
+        "reward": -241.57346938775504
+      },
+      {
+        "episode": 175,
+        "success": false,
+        "reward": -693.9448979591841
+      },
+      {
+        "episode": 176,
+        "success": false,
+        "reward": -640.0367346938774
+      },
+      {
+        "episode": 177,
+        "success": false,
+        "reward": -739.5204081632655
+      },
+      {
+        "episode": 178,
+        "success": true,
+        "reward": -102.67959183673466
+      },
+      {
+        "episode": 179,
+        "success": true,
+        "reward": -292.4959183673466
+      },
+      {
+        "episode": 180,
+        "success": true,
+        "reward": -125.4979591836734
+      },
+      {
+        "episode": 181,
+        "success": false,
+        "reward": -694.3979591836741
+      },
+      {
+        "episode": 182,
+        "success": true,
+        "reward": 15.310204081632676
+      },
+      {
+        "episode": 183,
+        "success": false,
+        "reward": -738.6040816326539
+      },
+      {
+        "episode": 184,
+        "success": false,
+        "reward": -685.7714285714301
+      },
+      {
+        "episode": 185,
+        "success": true,
+        "reward": -382.5979591836726
+      },
+      {
+        "episode": 186,
+        "success": false,
+        "reward": -576.3102040816328
+      },
+      {
+        "episode": 187,
+        "success": false,
+        "reward": -558.4734693877544
+      },
+      {
+        "episode": 188,
+        "success": false,
+        "reward": -594.295918367347
+      },
+      {
+        "episode": 189,
+        "success": false,
+        "reward": -584.4877551020419
+      },
+      {
+        "episode": 190,
+        "success": false,
+        "reward": -594.9224489795923
+      },
+      {
+        "episode": 191,
+        "success": false,
+        "reward": -612.3061224489795
+      },
+      {
+        "episode": 192,
+        "success": false,
+        "reward": -648.4020408163263
+      },
+      {
+        "episode": 193,
+        "success": false,
+        "reward": -721.9795918367358
+      },
+      {
+        "episode": 194,
+        "success": false,
+        "reward": -612.0000000000003
+      },
+      {
+        "episode": 195,
+        "success": false,
+        "reward": -639.5061224489792
+      },
+      {
+        "episode": 196,
+        "success": true,
+        "reward": -447.5836734693877
+      },
+      {
+        "episode": 197,
+        "success": true,
+        "reward": -66.57755102040821
+      },
+      {
+        "episode": 198,
+        "success": false,
+        "reward": -649.2551020408162
+      },
+      {
+        "episode": 199,
+        "success": false,
+        "reward": -621.8244897959174
+      },
+      {
+        "episode": 200,
+        "success": false,
+        "reward": -604.0469387755097
+      },
+      {
+        "episode": 201,
+        "success": true,
+        "reward": -450.40204081632623
+      },
+      {
+        "episode": 202,
+        "success": false,
+        "reward": -648.9795918367348
+      },
+      {
+        "episode": 203,
+        "success": true,
+        "reward": -479.13265306122435
+      },
+      {
+        "episode": 204,
+        "success": false,
+        "reward": -666.7163265306125
+      },
+      {
+        "episode": 205,
+        "success": false,
+        "reward": -620.3734693877544
+      },
+      {
+        "episode": 206,
+        "success": false,
+        "reward": -738.4163265306125
+      },
+      {
+        "episode": 207,
+        "success": false,
+        "reward": -711.8836734693883
+      },
+      {
+        "episode": 208,
+        "success": false,
+        "reward": -612.3204081632651
+      },
+      {
+        "episode": 209,
+        "success": true,
+        "reward": -80.42040816326534
+      },
+      {
+        "episode": 210,
+        "success": false,
+        "reward": -757.3816326530618
+      },
+      {
+        "episode": 211,
+        "success": false,
+        "reward": -557.7408163265308
+      },
+      {
+        "episode": 212,
+        "success": true,
+        "reward": -39.185714285714226
+      },
+      {
+        "episode": 213,
+        "success": false,
+        "reward": -611.779591836734
+      },
+      {
+        "episode": 214,
+        "success": false,
+        "reward": -639.6632653061229
+      },
+      {
+        "episode": 215,
+        "success": true,
+        "reward": -205.67755102040803
+      },
+      {
+        "episode": 216,
+        "success": false,
+        "reward": -676.310204081633
+      },
+      {
+        "episode": 217,
+        "success": false,
+        "reward": -602.9632653061224
+      },
+      {
+        "episode": 218,
+        "success": true,
+        "reward": -56.61836734693878
+      },
+      {
+        "episode": 219,
+        "success": false,
+        "reward": -693.5877551020404
+      },
+      {
+        "episode": 220,
+        "success": false,
+        "reward": -675.9510204081633
+      },
+      {
+        "episode": 221,
+        "success": false,
+        "reward": -675.9857142857151
+      },
+      {
+        "episode": 222,
+        "success": true,
+        "reward": -324.11224489795893
+      },
+      {
+        "episode": 223,
+        "success": false,
+        "reward": -685.1285714285716
+      },
+      {
+        "episode": 224,
+        "success": true,
+        "reward": -177.9081632653058
+      },
+      {
+        "episode": 225,
+        "success": false,
+        "reward": -675.9938775510205
+      },
+      {
+        "episode": 226,
+        "success": true,
+        "reward": 85.90408163265306
+      },
+      {
+        "episode": 227,
+        "success": false,
+        "reward": -675.7448979591843
+      },
+      {
+        "episode": 228,
+        "success": false,
+        "reward": -684.3897959183668
+      },
+      {
+        "episode": 229,
+        "success": false,
+        "reward": -656.502040816327
+      },
+      {
+        "episode": 230,
+        "success": false,
+        "reward": -611.4836734693879
+      },
+      {
+        "episode": 231,
+        "success": false,
+        "reward": -629.734693877551
+      },
+      {
+        "episode": 232,
+        "success": true,
+        "reward": -295.3632653061223
+      },
+      {
+        "episode": 233,
+        "success": true,
+        "reward": -71.93673469387753
+      },
+      {
+        "episode": 234,
+        "success": true,
+        "reward": -58.91632653061225
+      },
+      {
+        "episode": 235,
+        "success": false,
+        "reward": -720.9102040816327
+      },
+      {
+        "episode": 236,
+        "success": false,
+        "reward": -648.3795918367349
+      },
+      {
+        "episode": 237,
+        "success": false,
+        "reward": -585.4959183673474
+      },
+      {
+        "episode": 238,
+        "success": true,
+        "reward": -242.93877551020393
+      },
+      {
+        "episode": 239,
+        "success": true,
+        "reward": -541.2653061224488
+      },
+      {
+        "episode": 240,
+        "success": true,
+        "reward": 26.06326530612243
+      },
+      {
+        "episode": 241,
+        "success": false,
+        "reward": -675.2775510204084
+      },
+      {
+        "episode": 242,
+        "success": false,
+        "reward": -630.5448979591836
+      },
+      {
+        "episode": 243,
+        "success": false,
+        "reward": -585.3163265306113
+      },
+      {
+        "episode": 244,
+        "success": true,
+        "reward": -474.90204081632646
+      },
+      {
+        "episode": 245,
+        "success": true,
+        "reward": -195.02040816326507
+      },
+      {
+        "episode": 246,
+        "success": true,
+        "reward": -159.15510204081642
+      },
+      {
+        "episode": 247,
+        "success": false,
+        "reward": -658.0040816326527
+      },
+      {
+        "episode": 248,
+        "success": false,
+        "reward": -684.6816326530618
+      },
+      {
+        "episode": 249,
+        "success": false,
+        "reward": -631.0795918367354
+      },
+      {
+        "episode": 250,
+        "success": true,
+        "reward": -107.67142857142858
+      },
+      {
+        "episode": 251,
+        "success": false,
+        "reward": -656.6408163265309
+      },
+      {
+        "episode": 252,
+        "success": false,
+        "reward": -639.8367346938776
+      },
+      {
+        "episode": 253,
+        "success": false,
+        "reward": -675.5469387755096
+      },
+      {
+        "episode": 254,
+        "success": false,
+        "reward": -684.7346938775512
+      },
+      {
+        "episode": 255,
+        "success": true,
+        "reward": -414.532653061224
+      },
+      {
+        "episode": 256,
+        "success": true,
+        "reward": -259.4510204081629
+      },
+      {
+        "episode": 257,
+        "success": true,
+        "reward": -571.8816326530613
+      },
+      {
+        "episode": 258,
+        "success": false,
+        "reward": -675.7387755102046
+      },
+      {
+        "episode": 259,
+        "success": false,
+        "reward": -603.130612244898
+      },
+      {
+        "episode": 260,
+        "success": false,
+        "reward": -639.1795918367353
+      },
+      {
+        "episode": 261,
+        "success": false,
+        "reward": -630.5428571428566
+      },
+      {
+        "episode": 262,
+        "success": false,
+        "reward": -557.4408163265297
+      },
+      {
+        "episode": 263,
+        "success": false,
+        "reward": -657.9040816326534
+      },
+      {
+        "episode": 264,
+        "success": true,
+        "reward": -145.97959183673467
+      },
+      {
+        "episode": 265,
+        "success": true,
+        "reward": -91.92448979591839
+      },
+      {
+        "episode": 266,
+        "success": false,
+        "reward": -639.6081632653069
+      },
+      {
+        "episode": 267,
+        "success": true,
+        "reward": -498.22040816326523
+      },
+      {
+        "episode": 268,
+        "success": false,
+        "reward": -530.4408163265299
+      },
+      {
+        "episode": 269,
+        "success": true,
+        "reward": -55.467346938775535
+      },
+      {
+        "episode": 270,
+        "success": false,
+        "reward": -575.2571428571428
+      },
+      {
+        "episode": 271,
+        "success": false,
+        "reward": -657.2081632653061
+      },
+      {
+        "episode": 272,
+        "success": false,
+        "reward": -684.7775510204082
+      },
+      {
+        "episode": 273,
+        "success": true,
+        "reward": -62.497959183673544
+      },
+      {
+        "episode": 274,
+        "success": false,
+        "reward": -630.6877551020406
+      },
+      {
+        "episode": 275,
+        "success": true,
+        "reward": -88.40816326530609
+      },
+      {
+        "episode": 276,
+        "success": false,
+        "reward": -685.0836734693878
+      },
+      {
+        "episode": 277,
+        "success": true,
+        "reward": -202.48367346938778
+      },
+      {
+        "episode": 278,
+        "success": true,
+        "reward": -18.19591836734695
+      },
+      {
+        "episode": 279,
+        "success": false,
+        "reward": -739.4571428571422
+      },
+      {
+        "episode": 280,
+        "success": false,
+        "reward": -576.3897959183665
+      },
+      {
+        "episode": 281,
+        "success": true,
+        "reward": -340.7265306122449
+      },
+      {
+        "episode": 282,
+        "success": false,
+        "reward": -621.9591836734689
+      },
+      {
+        "episode": 283,
+        "success": false,
+        "reward": -639.4816326530607
+      },
+      {
+        "episode": 284,
+        "success": true,
+        "reward": 38.75714285714284
+      },
+      {
+        "episode": 285,
+        "success": false,
+        "reward": -702.7346938775513
+      },
+      {
+        "episode": 286,
+        "success": false,
+        "reward": -685.3938775510204
+      },
+      {
+        "episode": 287,
+        "success": true,
+        "reward": 4.934693877550998
+      },
+      {
+        "episode": 288,
+        "success": true,
+        "reward": -148.51632653061222
+      },
+      {
+        "episode": 289,
+        "success": false,
+        "reward": -585.0979591836727
+      },
+      {
+        "episode": 290,
+        "success": true,
+        "reward": -39.21632653061229
+      },
+      {
+        "episode": 291,
+        "success": true,
+        "reward": -146.3489795918367
+      },
+      {
+        "episode": 292,
+        "success": false,
+        "reward": -666.1693877551018
+      },
+      {
+        "episode": 293,
+        "success": false,
+        "reward": -711.8530612244901
+      },
+      {
+        "episode": 294,
+        "success": true,
+        "reward": -572.8326530612243
+      },
+      {
+        "episode": 295,
+        "success": false,
+        "reward": -621.5734693877552
+      },
+      {
+        "episode": 296,
+        "success": false,
+        "reward": -685.2265306122449
+      },
+      {
+        "episode": 297,
+        "success": false,
+        "reward": -630.2591836734696
+      },
+      {
+        "episode": 298,
+        "success": true,
+        "reward": -294.8020408163264
+      },
+      {
+        "episode": 299,
+        "success": true,
+        "reward": -277.55102040816325
+      },
+      {
+        "episode": 300,
+        "success": true,
+        "reward": -346.3244897959174
+      },
+      {
+        "episode": 301,
+        "success": true,
+        "reward": -240.1448979591837
+      },
+      {
+        "episode": 302,
+        "success": true,
+        "reward": -60.98163265306121
+      },
+      {
+        "episode": 303,
+        "success": true,
+        "reward": -392.71836734693807
+      },
+      {
+        "episode": 304,
+        "success": false,
+        "reward": -648.2673469387751
+      },
+      {
+        "episode": 305,
+        "success": true,
+        "reward": 8.424489795918376
+      },
+      {
+        "episode": 306,
+        "success": true,
+        "reward": -39.18571428571428
+      },
+      {
+        "episode": 307,
+        "success": false,
+        "reward": -685.2244897959199
+      },
+      {
+        "episode": 308,
+        "success": false,
+        "reward": -603.1081632653054
+      },
+      {
+        "episode": 309,
+        "success": true,
+        "reward": 25.044897959183658
+      },
+      {
+        "episode": 310,
+        "success": true,
+        "reward": -390.0673469387748
+      },
+      {
+        "episode": 311,
+        "success": false,
+        "reward": -639.4795918367341
+      },
+      {
+        "episode": 312,
+        "success": true,
+        "reward": -149.53877551020412
+      },
+      {
+        "episode": 313,
+        "success": true,
+        "reward": -37.744897959183646
+      },
+      {
+        "episode": 314,
+        "success": true,
+        "reward": -47.66734693877552
+      },
+      {
+        "episode": 315,
+        "success": true,
+        "reward": -109.1183673469387
+      },
+      {
+        "episode": 316,
+        "success": true,
+        "reward": -118.09387755102034
+      },
+      {
+        "episode": 317,
+        "success": false,
+        "reward": -576.2122448979601
+      },
+      {
+        "episode": 318,
+        "success": false,
+        "reward": -567.2448979591833
+      },
+      {
+        "episode": 319,
+        "success": false,
+        "reward": -611.4877551020406
+      },
+      {
+        "episode": 320,
+        "success": false,
+        "reward": -657.4775510204087
+      },
+      {
+        "episode": 321,
+        "success": true,
+        "reward": -170.8020408163265
+      },
+      {
+        "episode": 322,
+        "success": true,
+        "reward": -321.51020408163254
+      },
+      {
+        "episode": 323,
+        "success": true,
+        "reward": -286.00612244897997
+      },
+      {
+        "episode": 324,
+        "success": true,
+        "reward": -25.0448979591837
+      },
+      {
+        "episode": 325,
+        "success": true,
+        "reward": -167.52857142857135
+      },
+      {
+        "episode": 326,
+        "success": true,
+        "reward": -349.7836734693874
+      },
+      {
+        "episode": 327,
+        "success": true,
+        "reward": -38.967346938775506
+      },
+      {
+        "episode": 328,
+        "success": true,
+        "reward": 65.66530612244898
+      },
+      {
+        "episode": 329,
+        "success": true,
+        "reward": -209.98163265306124
+      },
+      {
+        "episode": 330,
+        "success": false,
+        "reward": -703.2122448979594
+      },
+      {
+        "episode": 331,
+        "success": true,
+        "reward": -76.14285714285714
+      },
+      {
+        "episode": 332,
+        "success": false,
+        "reward": -658.2285714285716
+      },
+      {
+        "episode": 333,
+        "success": false,
+        "reward": -657.7367346938775
+      },
+      {
+        "episode": 334,
+        "success": true,
+        "reward": 55.32448979591836
+      },
+      {
+        "episode": 335,
+        "success": false,
+        "reward": -684.6122448979596
+      },
+      {
+        "episode": 336,
+        "success": true,
+        "reward": -117.96122448979594
+      },
+      {
+        "episode": 337,
+        "success": true,
+        "reward": -115.36938775510205
+      },
+      {
+        "episode": 338,
+        "success": true,
+        "reward": -36.79387755102053
+      },
+      {
+        "episode": 339,
+        "success": false,
+        "reward": -656.6469387755103
+      },
+      {
+        "episode": 340,
+        "success": false,
+        "reward": -621.316326530612
+      },
+      {
+        "episode": 341,
+        "success": true,
+        "reward": -305.9673469387753
+      },
+      {
+        "episode": 342,
+        "success": true,
+        "reward": -6.244897959183632
+      },
+      {
+        "episode": 343,
+        "success": true,
+        "reward": -375.1367346938769
+      },
+      {
+        "episode": 344,
+        "success": true,
+        "reward": -208.03061224489795
+      },
+      {
+        "episode": 345,
+        "success": true,
+        "reward": -224.430612244898
+      },
+      {
+        "episode": 346,
+        "success": true,
+        "reward": -141.74081632653076
+      },
+      {
+        "episode": 347,
+        "success": true,
+        "reward": -133.926530612245
+      },
+      {
+        "episode": 348,
+        "success": true,
+        "reward": 20.897959183673464
+      },
+      {
+        "episode": 349,
+        "success": true,
+        "reward": 1.5061224489795677
+      },
+      {
+        "episode": 350,
+        "success": true,
+        "reward": -432.11020408163245
+      },
+      {
+        "episode": 351,
+        "success": false,
+        "reward": -583.8285714285713
+      },
+      {
+        "episode": 352,
+        "success": true,
+        "reward": 24.00204081632654
+      },
+      {
+        "episode": 353,
+        "success": true,
+        "reward": 5.55714285714285
+      },
+      {
+        "episode": 354,
+        "success": false,
+        "reward": -494.4489795918356
+      },
+      {
+        "episode": 355,
+        "success": true,
+        "reward": -297.808163265306
+      },
+      {
+        "episode": 356,
+        "success": true,
+        "reward": -44.42448979591833
+      },
+      {
+        "episode": 357,
+        "success": true,
+        "reward": -217.7877551020407
+      },
+      {
+        "episode": 358,
+        "success": true,
+        "reward": -125.39183673469387
+      },
+      {
+        "episode": 359,
+        "success": true,
+        "reward": 11.702040816326544
+      },
+      {
+        "episode": 360,
+        "success": false,
+        "reward": -639.5877551020409
+      },
+      {
+        "episode": 361,
+        "success": true,
+        "reward": 6.073469387755097
+      },
+      {
+        "episode": 362,
+        "success": true,
+        "reward": -507.7428571428561
+      },
+      {
+        "episode": 363,
+        "success": true,
+        "reward": -421.40612244897954
+      },
+      {
+        "episode": 364,
+        "success": false,
+        "reward": -666.6836734693879
+      },
+      {
+        "episode": 365,
+        "success": true,
+        "reward": 46.769387755102045
+      },
+      {
+        "episode": 366,
+        "success": true,
+        "reward": -509.4142857142855
+      },
+      {
+        "episode": 367,
+        "success": true,
+        "reward": -288.2244897959179
+      },
+      {
+        "episode": 368,
+        "success": false,
+        "reward": -594.5224489795933
+      },
+      {
+        "episode": 369,
+        "success": true,
+        "reward": 72.01632653061225
+      },
+      {
+        "episode": 370,
+        "success": true,
+        "reward": 27.21632653061225
+      },
+      {
+        "episode": 371,
+        "success": true,
+        "reward": -175.02448979591833
+      },
+      {
+        "episode": 372,
+        "success": true,
+        "reward": -14.067346938775515
+      },
+      {
+        "episode": 373,
+        "success": true,
+        "reward": -425.7020408163256
+      },
+      {
+        "episode": 374,
+        "success": true,
+        "reward": -340.80816326530555
+      },
+      {
+        "episode": 375,
+        "success": true,
+        "reward": -55.17346938775509
+      },
+      {
+        "episode": 376,
+        "success": true,
+        "reward": 73.99795918367347
+      },
+      {
+        "episode": 377,
+        "success": true,
+        "reward": -341.718367346939
+      },
+      {
+        "episode": 378,
+        "success": true,
+        "reward": -148.50204081632677
+      },
+      {
+        "episode": 379,
+        "success": false,
+        "reward": -630.4448979591832
+      },
+      {
+        "episode": 380,
+        "success": true,
+        "reward": -14.587755102040916
+      },
+      {
+        "episode": 381,
+        "success": true,
+        "reward": -178.28979591836747
+      },
+      {
+        "episode": 382,
+        "success": true,
+        "reward": -131.03673469387766
+      },
+      {
+        "episode": 383,
+        "success": true,
+        "reward": -570.1408163265303
+      },
+      {
+        "episode": 384,
+        "success": true,
+        "reward": -134.43265306122456
+      },
+      {
+        "episode": 385,
+        "success": true,
+        "reward": -183.7142857142859
+      },
+      {
+        "episode": 386,
+        "success": true,
+        "reward": 76.8265306122449
+      },
+      {
+        "episode": 387,
+        "success": true,
+        "reward": 12.818367346938771
+      },
+      {
+        "episode": 388,
+        "success": true,
+        "reward": 10.875510204081607
+      },
+      {
+        "episode": 389,
+        "success": true,
+        "reward": 52.61020408163266
+      },
+      {
+        "episode": 390,
+        "success": true,
+        "reward": -566.9469387755095
+      },
+      {
+        "episode": 391,
+        "success": true,
+        "reward": -387.5551020408162
+      },
+      {
+        "episode": 392,
+        "success": false,
+        "reward": -703.6775510204084
+      },
+      {
+        "episode": 393,
+        "success": true,
+        "reward": -132.86326530612257
+      },
+      {
+        "episode": 394,
+        "success": true,
+        "reward": 45.94285714285713
+      },
+      {
+        "episode": 395,
+        "success": true,
+        "reward": 60.093877551020405
+      },
+      {
+        "episode": 396,
+        "success": true,
+        "reward": -305.76326530612204
+      },
+      {
+        "episode": 397,
+        "success": true,
+        "reward": -235.5755102040814
+      },
+      {
+        "episode": 398,
+        "success": true,
+        "reward": -401.33265306122377
+      },
+      {
+        "episode": 399,
+        "success": true,
+        "reward": -188.70816326530615
+      }
+    ],
+    "hybrid": [
+      {
+        "episode": 400,
+        "success": true,
+        "reward": -150.5897959183673
+      },
+      {
+        "episode": 401,
+        "success": true,
+        "reward": -226.56326530612222
+      },
+      {
+        "episode": 402,
+        "success": true,
+        "reward": 61.169387755102036
+      },
+      {
+        "episode": 403,
+        "success": true,
+        "reward": 67.32448979591837
+      },
+      {
+        "episode": 404,
+        "success": true,
+        "reward": -218.69591836734674
+      },
+      {
+        "episode": 405,
+        "success": true,
+        "reward": 33.11224489795919
+      },
+      {
+        "episode": 406,
+        "success": true,
+        "reward": 86.87959183673469
+      },
+      {
+        "episode": 407,
+        "success": true,
+        "reward": -306.1959183673461
+      },
+      {
+        "episode": 408,
+        "success": false,
+        "reward": -693.2755102040816
+      },
+      {
+        "episode": 409,
+        "success": true,
+        "reward": 58.236734693877544
+      },
+      {
+        "episode": 410,
+        "success": true,
+        "reward": 47.712244897959174
+      },
+      {
+        "episode": 411,
+        "success": true,
+        "reward": -105.73265306122445
+      },
+      {
+        "episode": 412,
+        "success": true,
+        "reward": 66.51836734693877
+      },
+      {
+        "episode": 413,
+        "success": true,
+        "reward": -21.338775510204044
+      },
+      {
+        "episode": 414,
+        "success": true,
+        "reward": -155.61224489795924
+      },
+      {
+        "episode": 415,
+        "success": true,
+        "reward": 81.17755102040817
+      },
+      {
+        "episode": 416,
+        "success": true,
+        "reward": 19.597959183673467
+      },
+      {
+        "episode": 417,
+        "success": true,
+        "reward": 75.96326530612245
+      },
+      {
+        "episode": 418,
+        "success": true,
+        "reward": -130.46734693877553
+      },
+      {
+        "episode": 419,
+        "success": true,
+        "reward": -2.5551020408163367
+      },
+      {
+        "episode": 420,
+        "success": true,
+        "reward": -54.728571428571485
+      },
+      {
+        "episode": 421,
+        "success": true,
+        "reward": 54.58979591836734
+      },
+      {
+        "episode": 422,
+        "success": true,
+        "reward": -225.97959183673447
+      },
+      {
+        "episode": 423,
+        "success": true,
+        "reward": 87.88979591836734
+      },
+      {
+        "episode": 424,
+        "success": true,
+        "reward": 52.03469387755103
+      },
+      {
+        "episode": 425,
+        "success": true,
+        "reward": 86.06734693877551
+      },
+      {
+        "episode": 426,
+        "success": true,
+        "reward": -447.6183673469378
+      },
+      {
+        "episode": 427,
+        "success": true,
+        "reward": -103.51836734693882
+      },
+      {
+        "episode": 428,
+        "success": true,
+        "reward": 56.48775510204082
+      },
+      {
+        "episode": 429,
+        "success": true,
+        "reward": 89.6938775510204
+      },
+      {
+        "episode": 430,
+        "success": true,
+        "reward": -182.58571428571423
+      },
+      {
+        "episode": 431,
+        "success": true,
+        "reward": 37.64693877551021
+      },
+      {
+        "episode": 432,
+        "success": true,
+        "reward": 56.40408163265305
+      },
+      {
+        "episode": 433,
+        "success": true,
+        "reward": -268.1510204081631
+      },
+      {
+        "episode": 434,
+        "success": true,
+        "reward": -87.27142857142849
+      },
+      {
+        "episode": 435,
+        "success": true,
+        "reward": -7.559183673469377
+      },
+      {
+        "episode": 436,
+        "success": true,
+        "reward": 71.18163265306123
+      },
+      {
+        "episode": 437,
+        "success": true,
+        "reward": -182.53061224489795
+      },
+      {
+        "episode": 438,
+        "success": true,
+        "reward": -243.46734693877556
+      },
+      {
+        "episode": 439,
+        "success": true,
+        "reward": 89.68571428571428
+      },
+      {
+        "episode": 440,
+        "success": true,
+        "reward": 9.822448979591826
+      },
+      {
+        "episode": 441,
+        "success": true,
+        "reward": -280.51836734693865
+      },
+      {
+        "episode": 442,
+        "success": true,
+        "reward": -275.1938775510203
+      },
+      {
+        "episode": 443,
+        "success": true,
+        "reward": 88.78775510204082
+      },
+      {
+        "episode": 444,
+        "success": true,
+        "reward": -542.1346938775511
+      },
+      {
+        "episode": 445,
+        "success": true,
+        "reward": -20.959183673469383
+      },
+      {
+        "episode": 446,
+        "success": true,
+        "reward": -189.27346938775509
+      },
+      {
+        "episode": 447,
+        "success": true,
+        "reward": 15.414285714285725
+      },
+      {
+        "episode": 448,
+        "success": true,
+        "reward": 56.16326530612245
+      },
+      {
+        "episode": 449,
+        "success": true,
+        "reward": -176.68775510204085
+      },
+      {
+        "episode": 450,
+        "success": true,
+        "reward": 63.90612244897959
+      },
+      {
+        "episode": 451,
+        "success": true,
+        "reward": 49.1530612244898
+      },
+      {
+        "episode": 452,
+        "success": true,
+        "reward": -93.89795918367346
+      },
+      {
+        "episode": 453,
+        "success": true,
+        "reward": -137.9653061224489
+      },
+      {
+        "episode": 454,
+        "success": true,
+        "reward": -58.84693877551018
+      },
+      {
+        "episode": 455,
+        "success": true,
+        "reward": 52.957142857142856
+      },
+      {
+        "episode": 456,
+        "success": true,
+        "reward": -150.86734693877557
+      },
+      {
+        "episode": 457,
+        "success": true,
+        "reward": 65.83265306122449
+      },
+      {
+        "episode": 458,
+        "success": true,
+        "reward": -672.3734693877545
+      },
+      {
+        "episode": 459,
+        "success": true,
+        "reward": 51.06938775510205
+      },
+      {
+        "episode": 460,
+        "success": true,
+        "reward": -11.7734693877551
+      },
+      {
+        "episode": 461,
+        "success": true,
+        "reward": -16.083673469387776
+      },
+      {
+        "episode": 462,
+        "success": true,
+        "reward": -130.5163265306121
+      },
+      {
+        "episode": 463,
+        "success": true,
+        "reward": -155.63061224489786
+      },
+      {
+        "episode": 464,
+        "success": true,
+        "reward": 17.299999999999997
+      },
+      {
+        "episode": 465,
+        "success": true,
+        "reward": -196.41836734693885
+      },
+      {
+        "episode": 466,
+        "success": true,
+        "reward": 87.78979591836735
+      },
+      {
+        "episode": 467,
+        "success": true,
+        "reward": 88.7530612244898
+      },
+      {
+        "episode": 468,
+        "success": true,
+        "reward": -322.26938775510183
+      },
+      {
+        "episode": 469,
+        "success": true,
+        "reward": -10.27959183673471
+      },
+      {
+        "episode": 470,
+        "success": true,
+        "reward": -2.4857142857142804
+      },
+      {
+        "episode": 471,
+        "success": true,
+        "reward": -142.43877551020404
+      },
+      {
+        "episode": 472,
+        "success": true,
+        "reward": -124.66326530612241
+      },
+      {
+        "episode": 473,
+        "success": true,
+        "reward": -129.57755102040815
+      },
+      {
+        "episode": 474,
+        "success": true,
+        "reward": 77.86122448979592
+      },
+      {
+        "episode": 475,
+        "success": true,
+        "reward": -482.934693877551
+      },
+      {
+        "episode": 476,
+        "success": true,
+        "reward": 46.47346938775509
+      },
+      {
+        "episode": 477,
+        "success": true,
+        "reward": -53.1081632653061
+      },
+      {
+        "episode": 478,
+        "success": true,
+        "reward": -178.0632653061225
+      },
+      {
+        "episode": 479,
+        "success": true,
+        "reward": -260.6265306122449
+      },
+      {
+        "episode": 480,
+        "success": true,
+        "reward": 67.44489795918366
+      },
+      {
+        "episode": 481,
+        "success": true,
+        "reward": -5.053061224489795
+      },
+      {
+        "episode": 482,
+        "success": true,
+        "reward": -314.4448979591838
+      },
+      {
+        "episode": 483,
+        "success": true,
+        "reward": 37.35510204081632
+      },
+      {
+        "episode": 484,
+        "success": true,
+        "reward": -187.05510204081617
+      },
+      {
+        "episode": 485,
+        "success": true,
+        "reward": 16.2734693877551
+      },
+      {
+        "episode": 486,
+        "success": true,
+        "reward": 83.18775510204082
+      },
+      {
+        "episode": 487,
+        "success": true,
+        "reward": 44.3061224489796
+      },
+      {
+        "episode": 488,
+        "success": true,
+        "reward": 20.032653061224494
+      },
+      {
+        "episode": 489,
+        "success": true,
+        "reward": 57.43265306122449
+      },
+      {
+        "episode": 490,
+        "success": true,
+        "reward": 41.046938775510206
+      },
+      {
+        "episode": 491,
+        "success": true,
+        "reward": -247.94081632653052
+      },
+      {
+        "episode": 492,
+        "success": true,
+        "reward": 27.19387755102038
+      },
+      {
+        "episode": 493,
+        "success": true,
+        "reward": -24.861224489795916
+      },
+      {
+        "episode": 494,
+        "success": true,
+        "reward": -128.97755102040813
+      },
+      {
+        "episode": 495,
+        "success": true,
+        "reward": -216.63061224489797
+      },
+      {
+        "episode": 496,
+        "success": true,
+        "reward": -176.68163265306117
+      },
+      {
+        "episode": 497,
+        "success": true,
+        "reward": -1.9489795918367463
+      },
+      {
+        "episode": 498,
+        "success": true,
+        "reward": 47.20816326530612
+      },
+      {
+        "episode": 499,
+        "success": true,
+        "reward": 39.90816326530614
+      },
+      {
+        "episode": 500,
+        "success": true,
+        "reward": 10.31224489795919
+      },
+      {
+        "episode": 501,
+        "success": true,
+        "reward": 30.575510204081624
+      },
+      {
+        "episode": 502,
+        "success": true,
+        "reward": -462.25714285714287
+      },
+      {
+        "episode": 503,
+        "success": true,
+        "reward": 54.448979591836725
+      },
+      {
+        "episode": 504,
+        "success": true,
+        "reward": -52.39591836734695
+      },
+      {
+        "episode": 505,
+        "success": true,
+        "reward": -69.82653061224482
+      },
+      {
+        "episode": 506,
+        "success": true,
+        "reward": -201.81632653061206
+      },
+      {
+        "episode": 507,
+        "success": true,
+        "reward": 20.940816326530623
+      },
+      {
+        "episode": 508,
+        "success": true,
+        "reward": 17.94285714285715
+      },
+      {
+        "episode": 509,
+        "success": true,
+        "reward": -73.75510204081633
+      },
+      {
+        "episode": 510,
+        "success": true,
+        "reward": -129.06530612244896
+      },
+      {
+        "episode": 511,
+        "success": true,
+        "reward": -260.6693877551024
+      },
+      {
+        "episode": 512,
+        "success": true,
+        "reward": 88.74897959183673
+      },
+      {
+        "episode": 513,
+        "success": true,
+        "reward": -119.40204081632652
+      },
+      {
+        "episode": 514,
+        "success": true,
+        "reward": -3.663265306122426
+      },
+      {
+        "episode": 515,
+        "success": true,
+        "reward": 68.7265306122449
+      },
+      {
+        "episode": 516,
+        "success": true,
+        "reward": 53.957142857142856
+      },
+      {
+        "episode": 517,
+        "success": true,
+        "reward": 60.1734693877551
+      },
+      {
+        "episode": 518,
+        "success": true,
+        "reward": 20.324489795918367
+      },
+      {
+        "episode": 519,
+        "success": true,
+        "reward": 63.967346938775506
+      },
+      {
+        "episode": 520,
+        "success": true,
+        "reward": 86.83469387755102
+      },
+      {
+        "episode": 521,
+        "success": true,
+        "reward": -270.6306122448978
+      },
+      {
+        "episode": 522,
+        "success": true,
+        "reward": -316.0755102040815
+      },
+      {
+        "episode": 523,
+        "success": true,
+        "reward": -29.677551020408174
+      },
+      {
+        "episode": 524,
+        "success": true,
+        "reward": -75.50816326530608
+      },
+      {
+        "episode": 525,
+        "success": true,
+        "reward": 86.86326530612246
+      },
+      {
+        "episode": 526,
+        "success": true,
+        "reward": -281.1469387755102
+      },
+      {
+        "episode": 527,
+        "success": true,
+        "reward": 63.630612244897954
+      },
+      {
+        "episode": 528,
+        "success": true,
+        "reward": 57.40816326530612
+      },
+      {
+        "episode": 529,
+        "success": true,
+        "reward": 72.14693877551021
+      },
+      {
+        "episode": 530,
+        "success": true,
+        "reward": -7.98571428571428
+      },
+      {
+        "episode": 531,
+        "success": true,
+        "reward": -218.51020408163265
+      },
+      {
+        "episode": 532,
+        "success": true,
+        "reward": -48.72653061224494
+      },
+      {
+        "episode": 533,
+        "success": true,
+        "reward": 86.05510204081632
+      },
+      {
+        "episode": 534,
+        "success": true,
+        "reward": 16.040816326530603
+      },
+      {
+        "episode": 535,
+        "success": true,
+        "reward": -228.09183673469374
+      },
+      {
+        "episode": 536,
+        "success": true,
+        "reward": 75.88979591836734
+      },
+      {
+        "episode": 537,
+        "success": true,
+        "reward": -52.455102040816314
+      },
+      {
+        "episode": 538,
+        "success": true,
+        "reward": 39.13877551020408
+      },
+      {
+        "episode": 539,
+        "success": true,
+        "reward": 89.71020408163265
+      },
+      {
+        "episode": 540,
+        "success": true,
+        "reward": -100.61428571428564
+      },
+      {
+        "episode": 541,
+        "success": true,
+        "reward": 86.73469387755102
+      },
+      {
+        "episode": 542,
+        "success": true,
+        "reward": 78.76938775510204
+      },
+      {
+        "episode": 543,
+        "success": true,
+        "reward": 86.92244897959183
+      },
+      {
+        "episode": 544,
+        "success": true,
+        "reward": -76.38163265306122
+      },
+      {
+        "episode": 545,
+        "success": true,
+        "reward": 19.171428571428578
+      },
+      {
+        "episode": 546,
+        "success": true,
+        "reward": -73.62040816326532
+      },
+      {
+        "episode": 547,
+        "success": true,
+        "reward": 63.20204081632653
+      },
+      {
+        "episode": 548,
+        "success": true,
+        "reward": -176.82653061224488
+      },
+      {
+        "episode": 549,
+        "success": true,
+        "reward": 85.0061224489796
+      },
+      {
+        "episode": 550,
+        "success": true,
+        "reward": 84.09183673469387
+      },
+      {
+        "episode": 551,
+        "success": true,
+        "reward": -26.030612244897966
+      },
+      {
+        "episode": 552,
+        "success": true,
+        "reward": 74.14693877551021
+      },
+      {
+        "episode": 553,
+        "success": true,
+        "reward": 33.6142857142857
+      },
+      {
+        "episode": 554,
+        "success": true,
+        "reward": -84.80612244897955
+      },
+      {
+        "episode": 555,
+        "success": true,
+        "reward": 28.76530612244899
+      },
+      {
+        "episode": 556,
+        "success": true,
+        "reward": 5.234693877551024
+      },
+      {
+        "episode": 557,
+        "success": true,
+        "reward": 46.06938775510204
+      },
+      {
+        "episode": 558,
+        "success": true,
+        "reward": -54.66326530612238
+      },
+      {
+        "episode": 559,
+        "success": true,
+        "reward": 88.70612244897958
+      },
+      {
+        "episode": 560,
+        "success": true,
+        "reward": 17.834693877551018
+      },
+      {
+        "episode": 561,
+        "success": true,
+        "reward": -148.30204081632655
+      },
+      {
+        "episode": 562,
+        "success": true,
+        "reward": -71.87959183673473
+      },
+      {
+        "episode": 563,
+        "success": true,
+        "reward": -286.83061224489774
+      },
+      {
+        "episode": 564,
+        "success": true,
+        "reward": 32.77142857142857
+      },
+      {
+        "episode": 565,
+        "success": true,
+        "reward": -80.91428571428565
+      },
+      {
+        "episode": 566,
+        "success": true,
+        "reward": -1.2897959183673606
+      },
+      {
+        "episode": 567,
+        "success": true,
+        "reward": -178.54897959183654
+      },
+      {
+        "episode": 568,
+        "success": true,
+        "reward": -7.026530612244898
+      },
+      {
+        "episode": 569,
+        "success": true,
+        "reward": -10.538775510204061
+      },
+      {
+        "episode": 570,
+        "success": true,
+        "reward": 41.43673469387757
+      },
+      {
+        "episode": 571,
+        "success": true,
+        "reward": -45.03061224489795
+      },
+      {
+        "episode": 572,
+        "success": true,
+        "reward": -86.82448979591837
+      },
+      {
+        "episode": 573,
+        "success": true,
+        "reward": 7.355102040816348
+      },
+      {
+        "episode": 574,
+        "success": true,
+        "reward": -189.63469387755094
+      },
+      {
+        "episode": 575,
+        "success": true,
+        "reward": -167.3979591836735
+      },
+      {
+        "episode": 576,
+        "success": true,
+        "reward": -0.5081632653061234
+      },
+      {
+        "episode": 577,
+        "success": true,
+        "reward": 44.89183673469388
+      },
+      {
+        "episode": 578,
+        "success": true,
+        "reward": 62.118367346938776
+      },
+      {
+        "episode": 579,
+        "success": true,
+        "reward": 22.548979591836726
+      },
+      {
+        "episode": 580,
+        "success": true,
+        "reward": 72.11632653061224
+      },
+      {
+        "episode": 581,
+        "success": true,
+        "reward": -1.6673469387755375
+      },
+      {
+        "episode": 582,
+        "success": true,
+        "reward": -22.565306122448987
+      },
+      {
+        "episode": 583,
+        "success": true,
+        "reward": 84.76938775510204
+      },
+      {
+        "episode": 584,
+        "success": true,
+        "reward": 27.481632653061226
+      },
+      {
+        "episode": 585,
+        "success": true,
+        "reward": 64.99795918367346
+      },
+      {
+        "episode": 586,
+        "success": true,
+        "reward": -14.916326530612281
+      },
+      {
+        "episode": 587,
+        "success": true,
+        "reward": -104.14489795918362
+      },
+      {
+        "episode": 588,
+        "success": true,
+        "reward": 22.338775510204087
+      },
+      {
+        "episode": 589,
+        "success": true,
+        "reward": 67.30612244897958
+      },
+      {
+        "episode": 590,
+        "success": true,
+        "reward": -178.91224489795906
+      },
+      {
+        "episode": 591,
+        "success": true,
+        "reward": -179.98979591836718
+      },
+      {
+        "episode": 592,
+        "success": true,
+        "reward": -31.01020408163268
+      },
+      {
+        "episode": 593,
+        "success": true,
+        "reward": 42.50408163265306
+      },
+      {
+        "episode": 594,
+        "success": true,
+        "reward": 63.967346938775506
+      },
+      {
+        "episode": 595,
+        "success": true,
+        "reward": 63.48775510204082
+      },
+      {
+        "episode": 596,
+        "success": true,
+        "reward": 47.224489795918366
+      },
+      {
+        "episode": 597,
+        "success": true,
+        "reward": -29.94285714285718
+      },
+      {
+        "episode": 598,
+        "success": true,
+        "reward": 52.53877551020407
+      },
+      {
+        "episode": 599,
+        "success": true,
+        "reward": -39.83673469387756
+      },
+      {
+        "episode": 600,
+        "success": true,
+        "reward": 72.9469387755102
+      },
+      {
+        "episode": 601,
+        "success": true,
+        "reward": -54.69183673469388
+      },
+      {
+        "episode": 602,
+        "success": true,
+        "reward": -66.16326530612247
+      },
+      {
+        "episode": 603,
+        "success": true,
+        "reward": 44.99183673469387
+      },
+      {
+        "episode": 604,
+        "success": true,
+        "reward": 17.159183673469386
+      },
+      {
+        "episode": 605,
+        "success": true,
+        "reward": 51.62448979591836
+      },
+      {
+        "episode": 606,
+        "success": true,
+        "reward": -124.33469387755105
+      },
+      {
+        "episode": 607,
+        "success": true,
+        "reward": -50.43265306122447
+      },
+      {
+        "episode": 608,
+        "success": true,
+        "reward": -308.4020408163266
+      },
+      {
+        "episode": 609,
+        "success": true,
+        "reward": -166.93469387755084
+      },
+      {
+        "episode": 610,
+        "success": true,
+        "reward": 87.81020408163265
+      },
+      {
+        "episode": 611,
+        "success": true,
+        "reward": 88.7469387755102
+      },
+      {
+        "episode": 612,
+        "success": true,
+        "reward": 80.0
+      },
+      {
+        "episode": 613,
+        "success": true,
+        "reward": -55.03673469387749
+      },
+      {
+        "episode": 614,
+        "success": true,
+        "reward": 44.33673469387755
+      },
+      {
+        "episode": 615,
+        "success": true,
+        "reward": -10.920408163265321
+      },
+      {
+        "episode": 616,
+        "success": true,
+        "reward": -37.87142857142862
+      },
+      {
+        "episode": 617,
+        "success": true,
+        "reward": 84.10816326530612
+      },
+      {
+        "episode": 618,
+        "success": true,
+        "reward": 48.36122448979591
+      },
+      {
+        "episode": 619,
+        "success": true,
+        "reward": -268.5938775510202
+      },
+      {
+        "episode": 620,
+        "success": true,
+        "reward": 35.91428571428571
+      },
+      {
+        "episode": 621,
+        "success": true,
+        "reward": -194.42448979591842
+      },
+      {
+        "episode": 622,
+        "success": true,
+        "reward": -126.07142857142858
+      },
+      {
+        "episode": 623,
+        "success": true,
+        "reward": 79.68571428571428
+      },
+      {
+        "episode": 624,
+        "success": true,
+        "reward": -197.21632653061215
+      },
+      {
+        "episode": 625,
+        "success": true,
+        "reward": 13.544897959183672
+      },
+      {
+        "episode": 626,
+        "success": true,
+        "reward": -56.0673469387755
+      },
+      {
+        "episode": 627,
+        "success": true,
+        "reward": -70.43877551020415
+      },
+      {
+        "episode": 628,
+        "success": true,
+        "reward": 61.06530612244899
+      },
+      {
+        "episode": 629,
+        "success": true,
+        "reward": 87.79183673469387
+      },
+      {
+        "episode": 630,
+        "success": true,
+        "reward": 69.3265306122449
+      },
+      {
+        "episode": 631,
+        "success": true,
+        "reward": 37.27346938775511
+      },
+      {
+        "episode": 632,
+        "success": true,
+        "reward": 49.84897959183674
+      },
+      {
+        "episode": 633,
+        "success": true,
+        "reward": 14.671428571428592
+      },
+      {
+        "episode": 634,
+        "success": true,
+        "reward": 85.97551020408163
+      },
+      {
+        "episode": 635,
+        "success": true,
+        "reward": -403.58571428571383
+      },
+      {
+        "episode": 636,
+        "success": true,
+        "reward": 87.7204081632653
+      },
+      {
+        "episode": 637,
+        "success": true,
+        "reward": 25.432653061224485
+      },
+      {
+        "episode": 638,
+        "success": true,
+        "reward": 84.98979591836735
+      },
+      {
+        "episode": 639,
+        "success": true,
+        "reward": -63.98775510204072
+      },
+      {
+        "episode": 640,
+        "success": true,
+        "reward": 28.510204081632637
+      },
+      {
+        "episode": 641,
+        "success": true,
+        "reward": -24.177551020408174
+      },
+      {
+        "episode": 642,
+        "success": true,
+        "reward": 12.446938775510205
+      },
+      {
+        "episode": 643,
+        "success": true,
+        "reward": 74.93265306122449
+      },
+      {
+        "episode": 644,
+        "success": true,
+        "reward": -28.587755102040802
+      },
+      {
+        "episode": 645,
+        "success": true,
+        "reward": 9.655102040816345
+      },
+      {
+        "episode": 646,
+        "success": true,
+        "reward": 42.11428571428571
+      },
+      {
+        "episode": 647,
+        "success": true,
+        "reward": 22.31428571428573
+      },
+      {
+        "episode": 648,
+        "success": true,
+        "reward": -58.07551020408164
+      },
+      {
+        "episode": 649,
+        "success": true,
+        "reward": 83.9469387755102
+      },
+      {
+        "episode": 650,
+        "success": true,
+        "reward": 86.87346938775511
+      },
+      {
+        "episode": 651,
+        "success": true,
+        "reward": -0.7367346938775512
+      },
+      {
+        "episode": 652,
+        "success": true,
+        "reward": -70.95918367346934
+      },
+      {
+        "episode": 653,
+        "success": true,
+        "reward": -31.024489795918385
+      },
+      {
+        "episode": 654,
+        "success": true,
+        "reward": 23.061224489795933
+      },
+      {
+        "episode": 655,
+        "success": true,
+        "reward": 74.03061224489795
+      },
+      {
+        "episode": 656,
+        "success": true,
+        "reward": 36.063265306122446
+      },
+      {
+        "episode": 657,
+        "success": true,
+        "reward": 50.242857142857126
+      },
+      {
+        "episode": 658,
+        "success": true,
+        "reward": -50.61836734693881
+      },
+      {
+        "episode": 659,
+        "success": true,
+        "reward": -92.95102040816326
+      },
+      {
+        "episode": 660,
+        "success": true,
+        "reward": 76.92857142857143
+      },
+      {
+        "episode": 661,
+        "success": true,
+        "reward": -114.47551020408162
+      },
+      {
+        "episode": 662,
+        "success": true,
+        "reward": 2.0020408163265273
+      },
+      {
+        "episode": 663,
+        "success": true,
+        "reward": 34.65102040816326
+      },
+      {
+        "episode": 664,
+        "success": true,
+        "reward": 36.255102040816325
+      },
+      {
+        "episode": 665,
+        "success": true,
+        "reward": -73.869387755102
+      },
+      {
+        "episode": 666,
+        "success": true,
+        "reward": -218.16122448979593
+      },
+      {
+        "episode": 667,
+        "success": true,
+        "reward": 84.10000000000001
+      },
+      {
+        "episode": 668,
+        "success": true,
+        "reward": 56.195918367346934
+      },
+      {
+        "episode": 669,
+        "success": true,
+        "reward": 87.76530612244898
+      },
+      {
+        "episode": 670,
+        "success": true,
+        "reward": 74.04489795918367
+      },
+      {
+        "episode": 671,
+        "success": true,
+        "reward": 87.75918367346938
+      },
+      {
+        "episode": 672,
+        "success": true,
+        "reward": 58.16326530612243
+      },
+      {
+        "episode": 673,
+        "success": true,
+        "reward": -136.12653061224486
+      },
+      {
+        "episode": 674,
+        "success": true,
+        "reward": 23.267346938775532
+      },
+      {
+        "episode": 675,
+        "success": true,
+        "reward": 55.87142857142857
+      },
+      {
+        "episode": 676,
+        "success": true,
+        "reward": -51.19999999999996
+      },
+      {
+        "episode": 677,
+        "success": true,
+        "reward": -77.83265306122459
+      },
+      {
+        "episode": 678,
+        "success": true,
+        "reward": -85.36122448979594
+      },
+      {
+        "episode": 679,
+        "success": true,
+        "reward": 44.88571428571428
+      },
+      {
+        "episode": 680,
+        "success": true,
+        "reward": 87.83673469387755
+      },
+      {
+        "episode": 681,
+        "success": true,
+        "reward": -414.01020408163276
+      },
+      {
+        "episode": 682,
+        "success": true,
+        "reward": 72.89183673469388
+      },
+      {
+        "episode": 683,
+        "success": true,
+        "reward": -222.58367346938758
+      },
+      {
+        "episode": 684,
+        "success": true,
+        "reward": 73.04081632653062
+      },
+      {
+        "episode": 685,
+        "success": true,
+        "reward": 88.7795918367347
+      },
+      {
+        "episode": 686,
+        "success": true,
+        "reward": -17.853061224489807
+      },
+      {
+        "episode": 687,
+        "success": true,
+        "reward": 88.76122448979592
+      },
+      {
+        "episode": 688,
+        "success": true,
+        "reward": 49.889795918367355
+      },
+      {
+        "episode": 689,
+        "success": true,
+        "reward": -94.91632653061217
+      },
+      {
+        "episode": 690,
+        "success": true,
+        "reward": -20.68367346938774
+      },
+      {
+        "episode": 691,
+        "success": true,
+        "reward": -121.86122448979597
+      },
+      {
+        "episode": 692,
+        "success": true,
+        "reward": 75.88367346938776
+      },
+      {
+        "episode": 693,
+        "success": true,
+        "reward": -62.51224489795911
+      },
+      {
+        "episode": 694,
+        "success": true,
+        "reward": 62.04489795918368
+      },
+      {
+        "episode": 695,
+        "success": true,
+        "reward": 51.63061224489796
+      },
+      {
+        "episode": 696,
+        "success": true,
+        "reward": 64.70204081632653
+      },
+      {
+        "episode": 697,
+        "success": true,
+        "reward": -25.93877551020411
+      },
+      {
+        "episode": 698,
+        "success": true,
+        "reward": -10.559183673469391
+      },
+      {
+        "episode": 699,
+        "success": true,
+        "reward": 87.79795918367347
+      }
+    ],
+    "actor_critic": [
+      {
+        "episode": 700,
+        "success": false,
+        "reward": -543.3183673469382
+      },
+      {
+        "episode": 701,
+        "success": false,
+        "reward": -534.6183673469365
+      },
+      {
+        "episode": 702,
+        "success": false,
+        "reward": -544.6367346938777
+      },
+      {
+        "episode": 703,
+        "success": false,
+        "reward": -507.64897959183673
+      },
+      {
+        "episode": 704,
+        "success": false,
+        "reward": -480.2734693877559
+      },
+      {
+        "episode": 705,
+        "success": false,
+        "reward": -481.11224489795796
+      },
+      {
+        "episode": 706,
+        "success": false,
+        "reward": -562.4346938775517
+      },
+      {
+        "episode": 707,
+        "success": false,
+        "reward": -560.8306122448981
+      },
+      {
+        "episode": 708,
+        "success": false,
+        "reward": -551.3020408163263
+      },
+      {
+        "episode": 709,
+        "success": false,
+        "reward": -453.38367346938713
+      },
+      {
+        "episode": 710,
+        "success": false,
+        "reward": -578.561224489795
+      },
+      {
+        "episode": 711,
+        "success": false,
+        "reward": -444.377551020409
+      },
+      {
+        "episode": 712,
+        "success": false,
+        "reward": -589.132653061223
+      },
+      {
+        "episode": 713,
+        "success": false,
+        "reward": -534.6775510204076
+      },
+      {
+        "episode": 714,
+        "success": false,
+        "reward": -499.1142857142855
+      },
+      {
+        "episode": 715,
+        "success": false,
+        "reward": -525.575510204081
+      },
+      {
+        "episode": 716,
+        "success": false,
+        "reward": -544.2000000000005
+      },
+      {
+        "episode": 717,
+        "success": false,
+        "reward": -461.8938775510204
+      },
+      {
+        "episode": 718,
+        "success": false,
+        "reward": -471.2938775510209
+      },
+      {
+        "episode": 719,
+        "success": false,
+        "reward": -489.2734693877553
+      },
+      {
+        "episode": 720,
+        "success": false,
+        "reward": -534.5265306122442
+      },
+      {
+        "episode": 721,
+        "success": false,
+        "reward": -543.065306122449
+      },
+      {
+        "episode": 722,
+        "success": false,
+        "reward": -488.7918367346947
+      },
+      {
+        "episode": 723,
+        "success": false,
+        "reward": -453.61632653061093
+      },
+      {
+        "episode": 724,
+        "success": false,
+        "reward": -507.7653061224487
+      },
+      {
+        "episode": 725,
+        "success": false,
+        "reward": -516.2673469387747
+      },
+      {
+        "episode": 726,
+        "success": false,
+        "reward": -508.0040816326519
+      },
+      {
+        "episode": 727,
+        "success": false,
+        "reward": -562.3530612244889
+      },
+      {
+        "episode": 728,
+        "success": false,
+        "reward": -525.9040816326532
+      },
+      {
+        "episode": 729,
+        "success": false,
+        "reward": -507.64693877550945
+      },
+      {
+        "episode": 730,
+        "success": false,
+        "reward": -562.2387755102047
+      },
+      {
+        "episode": 731,
+        "success": false,
+        "reward": -525.7938775510203
+      },
+      {
+        "episode": 732,
+        "success": false,
+        "reward": -534.5061224489796
+      },
+      {
+        "episode": 733,
+        "success": false,
+        "reward": -433.27142857142735
+      },
+      {
+        "episode": 734,
+        "success": false,
+        "reward": -480.5326530612252
+      },
+      {
+        "episode": 735,
+        "success": false,
+        "reward": -516.5795918367347
+      },
+      {
+        "episode": 736,
+        "success": false,
+        "reward": -497.048979591836
+      },
+      {
+        "episode": 737,
+        "success": false,
+        "reward": -543.3857142857144
+      },
+      {
+        "episode": 738,
+        "success": false,
+        "reward": -488.2591836734689
+      },
+      {
+        "episode": 739,
+        "success": false,
+        "reward": -552.4836734693872
+      },
+      {
+        "episode": 740,
+        "success": false,
+        "reward": -515.9816326530599
+      },
+      {
+        "episode": 741,
+        "success": false,
+        "reward": -488.6020408163255
+      },
+      {
+        "episode": 742,
+        "success": false,
+        "reward": -553.0734693877557
+      },
+      {
+        "episode": 743,
+        "success": false,
+        "reward": -588.94693877551
+      },
+      {
+        "episode": 744,
+        "success": false,
+        "reward": -570.6795918367342
+      },
+      {
+        "episode": 745,
+        "success": false,
+        "reward": -425.49387755101947
+      },
+      {
+        "episode": 746,
+        "success": false,
+        "reward": -524.1142857142844
+      },
+      {
+        "episode": 747,
+        "success": false,
+        "reward": -508.1836734693869
+      },
+      {
+        "episode": 748,
+        "success": false,
+        "reward": -490.7224489795909
+      },
+      {
+        "episode": 749,
+        "success": false,
+        "reward": -588.3959183673458
+      },
+      {
+        "episode": 750,
+        "success": false,
+        "reward": -507.1163265306111
+      },
+      {
+        "episode": 751,
+        "success": false,
+        "reward": -570.5897959183675
+      },
+      {
+        "episode": 752,
+        "success": false,
+        "reward": -462.8285714285704
+      },
+      {
+        "episode": 753,
+        "success": false,
+        "reward": -489.4387755102041
+      },
+      {
+        "episode": 754,
+        "success": false,
+        "reward": -561.5469387755107
+      },
+      {
+        "episode": 755,
+        "success": false,
+        "reward": -462.01836734693876
+      },
+      {
+        "episode": 756,
+        "success": false,
+        "reward": -487.7918367346935
+      },
+      {
+        "episode": 757,
+        "success": false,
+        "reward": -526.099999999999
+      },
+      {
+        "episode": 758,
+        "success": false,
+        "reward": -461.80612244898003
+      },
+      {
+        "episode": 759,
+        "success": false,
+        "reward": -497.3877551020396
+      },
+      {
+        "episode": 760,
+        "success": false,
+        "reward": -516.2122448979599
+      },
+      {
+        "episode": 761,
+        "success": false,
+        "reward": -534.1571428571428
+      },
+      {
+        "episode": 762,
+        "success": false,
+        "reward": -525.5836734693881
+      },
+      {
+        "episode": 763,
+        "success": false,
+        "reward": -461.68571428571306
+      },
+      {
+        "episode": 764,
+        "success": false,
+        "reward": -507.71020408163275
+      },
+      {
+        "episode": 765,
+        "success": false,
+        "reward": -535.1183673469379
+      },
+      {
+        "episode": 766,
+        "success": false,
+        "reward": -561.4326530612244
+      },
+      {
+        "episode": 767,
+        "success": false,
+        "reward": -496.73877551020325
+      },
+      {
+        "episode": 768,
+        "success": false,
+        "reward": -553.1816326530615
+      },
+      {
+        "episode": 769,
+        "success": false,
+        "reward": -552.9693877551022
+      },
+      {
+        "episode": 770,
+        "success": false,
+        "reward": -605.7979591836729
+      },
+      {
+        "episode": 771,
+        "success": false,
+        "reward": -471.6265306122444
+      },
+      {
+        "episode": 772,
+        "success": false,
+        "reward": -570.279591836735
+      },
+      {
+        "episode": 773,
+        "success": false,
+        "reward": -525.218367346938
+      },
+      {
+        "episode": 774,
+        "success": false,
+        "reward": -570.6959183673462
+      },
+      {
+        "episode": 775,
+        "success": false,
+        "reward": -570.5122448979582
+      },
+      {
+        "episode": 776,
+        "success": false,
+        "reward": -533.8612244897948
+      },
+      {
+        "episode": 777,
+        "success": false,
+        "reward": -525.2979591836727
+      },
+      {
+        "episode": 778,
+        "success": false,
+        "reward": -542.8693877551024
+      },
+      {
+        "episode": 779,
+        "success": false,
+        "reward": -462.7653061224481
+      },
+      {
+        "episode": 780,
+        "success": false,
+        "reward": -480.4285714285704
+      },
+      {
+        "episode": 781,
+        "success": false,
+        "reward": -480.1020408163259
+      },
+      {
+        "episode": 782,
+        "success": false,
+        "reward": -516.0020408163259
+      },
+      {
+        "episode": 783,
+        "success": false,
+        "reward": -570.9448979591835
+      },
+      {
+        "episode": 784,
+        "success": false,
+        "reward": -553.0367346938766
+      },
+      {
+        "episode": 785,
+        "success": false,
+        "reward": -498.30408163265184
+      },
+      {
+        "episode": 786,
+        "success": false,
+        "reward": -480.6102040816318
+      },
+      {
+        "episode": 787,
+        "success": false,
+        "reward": -606.7489795918365
+      },
+      {
+        "episode": 788,
+        "success": false,
+        "reward": -570.5918367346944
+      },
+      {
+        "episode": 789,
+        "success": false,
+        "reward": -507.3755102040818
+      },
+      {
+        "episode": 790,
+        "success": false,
+        "reward": -561.8061224489795
+      },
+      {
+        "episode": 791,
+        "success": false,
+        "reward": -489.70612244897893
+      },
+      {
+        "episode": 792,
+        "success": false,
+        "reward": -597.3081632653067
+      },
+      {
+        "episode": 793,
+        "success": false,
+        "reward": -543.2387755102038
+      },
+      {
+        "episode": 794,
+        "success": false,
+        "reward": -507.4061224489795
+      },
+      {
+        "episode": 795,
+        "success": false,
+        "reward": -471.4367346938762
+      },
+      {
+        "episode": 796,
+        "success": false,
+        "reward": -489.23469387755057
+      },
+      {
+        "episode": 797,
+        "success": false,
+        "reward": -498.208163265306
+      },
+      {
+        "episode": 798,
+        "success": false,
+        "reward": -552.3061224489785
+      },
+      {
+        "episode": 799,
+        "success": false,
+        "reward": -489.6204081632658
+      },
+      {
+        "episode": 800,
+        "success": false,
+        "reward": -481.11224489795825
+      },
+      {
+        "episode": 801,
+        "success": false,
+        "reward": -542.6795918367349
+      },
+      {
+        "episode": 802,
+        "success": false,
+        "reward": -461.95102040816437
+      },
+      {
+        "episode": 803,
+        "success": false,
+        "reward": -459.98367346938693
+      },
+      {
+        "episode": 804,
+        "success": false,
+        "reward": -544.2367346938779
+      },
+      {
+        "episode": 805,
+        "success": false,
+        "reward": -488.42448979591825
+      },
+      {
+        "episode": 806,
+        "success": false,
+        "reward": -479.19387755101985
+      },
+      {
+        "episode": 807,
+        "success": false,
+        "reward": -506.60408163265214
+      },
+      {
+        "episode": 808,
+        "success": false,
+        "reward": -516.80612244898
+      },
+      {
+        "episode": 809,
+        "success": false,
+        "reward": -534.6775510204078
+      },
+      {
+        "episode": 810,
+        "success": false,
+        "reward": -562.1122448979596
+      },
+      {
+        "episode": 811,
+        "success": false,
+        "reward": -543.0653061224486
+      },
+      {
+        "episode": 812,
+        "success": false,
+        "reward": -517.1122448979589
+      },
+      {
+        "episode": 813,
+        "success": false,
+        "reward": -480.54285714285635
+      },
+      {
+        "episode": 814,
+        "success": false,
+        "reward": -570.6836734693878
+      },
+      {
+        "episode": 815,
+        "success": false,
+        "reward": -525.1142857142851
+      },
+      {
+        "episode": 816,
+        "success": false,
+        "reward": -463.29795918367205
+      },
+      {
+        "episode": 817,
+        "success": false,
+        "reward": -498.7551020408152
+      },
+      {
+        "episode": 818,
+        "success": false,
+        "reward": -515.6836734693873
+      },
+      {
+        "episode": 819,
+        "success": false,
+        "reward": -462.51224489795794
+      },
+      {
+        "episode": 820,
+        "success": false,
+        "reward": -507.0183673469385
+      },
+      {
+        "episode": 821,
+        "success": false,
+        "reward": -497.41020408163223
+      },
+      {
+        "episode": 822,
+        "success": false,
+        "reward": -516.6081632653053
+      },
+      {
+        "episode": 823,
+        "success": false,
+        "reward": -523.8367346938776
+      },
+      {
+        "episode": 824,
+        "success": false,
+        "reward": -480.43877551020336
+      },
+      {
+        "episode": 825,
+        "success": false,
+        "reward": -435.7836734693868
+      },
+      {
+        "episode": 826,
+        "success": false,
+        "reward": -462.52244897959235
+      },
+      {
+        "episode": 827,
+        "success": false,
+        "reward": -490.4265306122442
+      },
+      {
+        "episode": 828,
+        "success": false,
+        "reward": -569.4612244897965
+      },
+      {
+        "episode": 829,
+        "success": false,
+        "reward": -524.4061224489785
+      },
+      {
+        "episode": 830,
+        "success": false,
+        "reward": -470.5795918367328
+      },
+      {
+        "episode": 831,
+        "success": false,
+        "reward": -524.622448979591
+      },
+      {
+        "episode": 832,
+        "success": false,
+        "reward": -517.4551020408169
+      },
+      {
+        "episode": 833,
+        "success": false,
+        "reward": -498.82653061224494
+      },
+      {
+        "episode": 834,
+        "success": false,
+        "reward": -543.2489795918375
+      },
+      {
+        "episode": 835,
+        "success": false,
+        "reward": -569.5897959183673
+      },
+      {
+        "episode": 836,
+        "success": false,
+        "reward": -426.9571428571421
+      },
+      {
+        "episode": 837,
+        "success": false,
+        "reward": -614.987755102041
+      },
+      {
+        "episode": 838,
+        "success": false,
+        "reward": -480.7448979591837
+      },
+      {
+        "episode": 839,
+        "success": false,
+        "reward": -471.23265306122386
+      },
+      {
+        "episode": 840,
+        "success": false,
+        "reward": -497.2530612244891
+      },
+      {
+        "episode": 841,
+        "success": false,
+        "reward": -516.1755102040818
+      },
+      {
+        "episode": 842,
+        "success": false,
+        "reward": -535.5326530612248
+      },
+      {
+        "episode": 843,
+        "success": false,
+        "reward": -470.95714285714195
+      },
+      {
+        "episode": 844,
+        "success": false,
+        "reward": -543.3836734693875
+      },
+      {
+        "episode": 845,
+        "success": false,
+        "reward": -507.68163265306225
+      },
+      {
+        "episode": 846,
+        "success": false,
+        "reward": -569.8918367346936
+      },
+      {
+        "episode": 847,
+        "success": false,
+        "reward": -525.0469387755105
+      },
+      {
+        "episode": 848,
+        "success": false,
+        "reward": -490.89795918367366
+      },
+      {
+        "episode": 849,
+        "success": false,
+        "reward": -462.28367346938614
+      },
+      {
+        "episode": 850,
+        "success": false,
+        "reward": -597.0979591836726
+      },
+      {
+        "episode": 851,
+        "success": false,
+        "reward": -471.07959183673404
+      },
+      {
+        "episode": 852,
+        "success": false,
+        "reward": -498.4551020408162
+      },
+      {
+        "episode": 853,
+        "success": false,
+        "reward": -499.0204081632643
+      },
+      {
+        "episode": 854,
+        "success": false,
+        "reward": -488.7979591836737
+      },
+      {
+        "episode": 855,
+        "success": false,
+        "reward": -487.8959183673452
+      },
+      {
+        "episode": 856,
+        "success": false,
+        "reward": -552.3428571428565
+      },
+      {
+        "episode": 857,
+        "success": false,
+        "reward": -543.2040816326522
+      },
+      {
+        "episode": 858,
+        "success": false,
+        "reward": -471.1489795918365
+      },
+      {
+        "episode": 859,
+        "success": false,
+        "reward": -470.1040816326519
+      },
+      {
+        "episode": 860,
+        "success": false,
+        "reward": -543.8530612244896
+      },
+      {
+        "episode": 861,
+        "success": false,
+        "reward": -490.31224489796045
+      },
+      {
+        "episode": 862,
+        "success": false,
+        "reward": -489.3265306122449
+      },
+      {
+        "episode": 863,
+        "success": false,
+        "reward": -498.6918367346927
+      },
+      {
+        "episode": 864,
+        "success": false,
+        "reward": -506.914285714284
+      },
+      {
+        "episode": 865,
+        "success": false,
+        "reward": -506.2673469387743
+      },
+      {
+        "episode": 866,
+        "success": false,
+        "reward": -497.79591836734653
+      },
+      {
+        "episode": 867,
+        "success": false,
+        "reward": -543.4163265306129
+      },
+      {
+        "episode": 868,
+        "success": false,
+        "reward": -470.2775510204078
+      },
+      {
+        "episode": 869,
+        "success": false,
+        "reward": -543.6877551020392
+      },
+      {
+        "episode": 870,
+        "success": false,
+        "reward": -507.30612244897986
+      },
+      {
+        "episode": 871,
+        "success": false,
+        "reward": -436.78367346938865
+      },
+      {
+        "episode": 872,
+        "success": false,
+        "reward": -561.5244897959168
+      },
+      {
+        "episode": 873,
+        "success": false,
+        "reward": -461.41836734693874
+      },
+      {
+        "episode": 874,
+        "success": false,
+        "reward": -480.3999999999993
+      },
+      {
+        "episode": 875,
+        "success": false,
+        "reward": -480.4204081632661
+      },
+      {
+        "episode": 876,
+        "success": false,
+        "reward": -498.7999999999998
+      },
+      {
+        "episode": 877,
+        "success": false,
+        "reward": -534.8877551020414
+      },
+      {
+        "episode": 878,
+        "success": false,
+        "reward": -506.91836734693953
+      },
+      {
+        "episode": 879,
+        "success": false,
+        "reward": -497.25102040816284
+      },
+      {
+        "episode": 880,
+        "success": false,
+        "reward": -489.4836734693875
+      },
+      {
+        "episode": 881,
+        "success": false,
+        "reward": -488.3612244897957
+      },
+      {
+        "episode": 882,
+        "success": false,
+        "reward": -479.7591836734694
+      },
+      {
+        "episode": 883,
+        "success": false,
+        "reward": -551.7346938775506
+      },
+      {
+        "episode": 884,
+        "success": false,
+        "reward": -479.87142857142743
+      },
+      {
+        "episode": 885,
+        "success": false,
+        "reward": -497.3081632653056
+      },
+      {
+        "episode": 886,
+        "success": false,
+        "reward": -498.85510204081504
+      },
+      {
+        "episode": 887,
+        "success": false,
+        "reward": -489.5877551020402
+      },
+      {
+        "episode": 888,
+        "success": false,
+        "reward": -534.7612244897957
+      },
+      {
+        "episode": 889,
+        "success": false,
+        "reward": -570.0693877551008
+      },
+      {
+        "episode": 890,
+        "success": false,
+        "reward": -498.6816326530594
+      },
+      {
+        "episode": 891,
+        "success": false,
+        "reward": -542.9408163265292
+      },
+      {
+        "episode": 892,
+        "success": false,
+        "reward": -542.9142857142856
+      },
+      {
+        "episode": 893,
+        "success": false,
+        "reward": -516.0979591836731
+      },
+      {
+        "episode": 894,
+        "success": false,
+        "reward": -452.616326530612
+      },
+      {
+        "episode": 895,
+        "success": false,
+        "reward": -498.4163265306121
+      },
+      {
+        "episode": 896,
+        "success": false,
+        "reward": -508.24693877551
+      },
+      {
+        "episode": 897,
+        "success": false,
+        "reward": -480.2326530612237
+      },
+      {
+        "episode": 898,
+        "success": false,
+        "reward": -515.9959183673469
+      },
+      {
+        "episode": 899,
+        "success": false,
+        "reward": -516.7714285714275
+      }
+    ]
+  }
+}

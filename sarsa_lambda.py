@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Tuple, List, Dict, Any
 import random
-from simple_racetrack_env import SimpleRacetrackEnv
+from racetrack_env import RacetrackEnv
 
 
 class SarsaLambdaAgent:
@@ -10,7 +10,7 @@ class SarsaLambdaAgent:
     使用资格迹加速学习
     """
     
-    def __init__(self, env: SimpleRacetrackEnv, alpha=0.1, gamma=0.95, lambda_=0.9, epsilon=0.1):
+    def __init__(self, env: RacetrackEnv, alpha=0.1, gamma=0.95, lambda_=0.9, epsilon=0.1):
         self.env = env
         self.alpha = alpha
         self.gamma = gamma
@@ -189,7 +189,7 @@ def main():
     print("=== Sarsa(λ) 智能体训练演示 ===")
     
     # 创建环境
-    env = SimpleRacetrackEnv(track_size=(32, 17), max_speed=5)
+    env = RacetrackEnv(track_size=(32, 17), max_speed=5)
     print(f"环境信息：")
     print(f"  - 赛道大小: {env.track_size}")
     print(f"  - 最大速度: {env.max_speed}")
@@ -234,12 +234,14 @@ def main():
     test_episodes = 10
     test_rewards = []
     test_steps = []
+    test_paths = []
     success_count = 0
     
     for i in range(test_episodes):
         reward, step_count, path = agent.test_episode()
         test_rewards.append(reward)
         test_steps.append(step_count)
+        test_paths.append(path)
         is_success = path[-1] in env.goal_positions
         if is_success:
             success_count += 1
@@ -252,11 +254,30 @@ def main():
     print(f"平均奖励: {np.mean(test_rewards):.2f} ± {np.std(test_rewards):.2f}")
     print(f"平均步数: {np.mean(test_steps):.2f} ± {np.std(test_steps):.2f}")
     
-    # 展示一次成功的路径
+    # 从测试结果中找到最优路径
     print(f"\n=== 展示最优路径 ===")
-    best_reward, best_steps, best_path = agent.test_episode(render=False)
-    print(f"最优路径: 奖励 = {best_reward:.2f}, 步数 = {best_steps}")
-    print(f"路径长度: {len(best_path)} 个位置")
+    # 找到奖励最高的成功路径
+    best_idx = -1
+    best_reward = float('-inf')
+    for i, (reward, path) in enumerate(zip(test_rewards, test_paths)):
+        if path[-1] in env.goal_positions and reward > best_reward:
+            best_reward = reward
+            best_idx = i
+    
+    if best_idx >= 0:
+        best_reward = test_rewards[best_idx]
+        best_steps = test_steps[best_idx]
+        best_path = test_paths[best_idx]
+        print(f"最优路径 (来自测试 {best_idx+1}): 奖励 = {best_reward:.2f}, 步数 = {best_steps}")
+        print(f"路径长度: {len(best_path)} 个位置")
+    else:
+        print("未找到成功的路径，显示奖励最高的路径:")
+        best_idx = np.argmax(test_rewards)
+        best_reward = test_rewards[best_idx]
+        best_steps = test_steps[best_idx]
+        best_path = test_paths[best_idx]
+        print(f"最佳尝试 (来自测试 {best_idx+1}): 奖励 = {best_reward:.2f}, 步数 = {best_steps}")
+        print(f"路径长度: {len(best_path)} 个位置")
     
     if len(best_path) <= 20:  # 如果路径不太长，显示完整路径
         print("完整路径:", " -> ".join([f"({x},{y})" for x, y in best_path]))

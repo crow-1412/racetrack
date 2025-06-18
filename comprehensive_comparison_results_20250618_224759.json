@@ -1,0 +1,94 @@
+{
+  "timestamp": "20250618_224759",
+  "test_config": {
+    "test_episodes": 100,
+    "stability_tests": 20,
+    "track_size": [
+      32,
+      17
+    ],
+    "max_speed": 5
+  },
+  "results": {
+    "REINFORCE": {
+      "success_rate": 0.38,
+      "avg_reward": -90.55908163265315,
+      "avg_steps": 132.87,
+      "reward_std": 132.63631118719226,
+      "steps_std": 85.7802605498491,
+      "success_rate_variance": 0.017474999999999997,
+      "total_tests": 100,
+      "successful_tests": 38
+    },
+    "Actor-Critic": {
+      "success_rate": 0.65,
+      "avg_reward": -54.05057142857147,
+      "avg_steps": 121.25,
+      "reward_std": 173.40903595757385,
+      "steps_std": 131.26731314382874,
+      "success_rate_variance": 0.0131,
+      "total_tests": 100,
+      "successful_tests": 65
+    },
+    "PPO": {
+      "success_rate": 0.0,
+      "avg_reward": -290.82857142857125,
+      "avg_steps": 300.0,
+      "reward_std": 3.0697595302419893,
+      "steps_std": 0.0,
+      "success_rate_variance": 0.0,
+      "total_tests": 100,
+      "successful_tests": 0
+    },
+    "TRPO": {
+      "success_rate": 0.04,
+      "avg_reward": -294.7339795918364,
+      "avg_steps": 290.79,
+      "reward_std": 65.54634171701987,
+      "steps_std": 45.79154834682924,
+      "success_rate_variance": 0.0034750000000000002,
+      "total_tests": 100,
+      "successful_tests": 4
+    },
+    "Q-Learning": {
+      "success_rate": 1.0,
+      "avg_reward": 72.96310204081632,
+      "avg_steps": 19.13,
+      "reward_std": 20.974088825400976,
+      "steps_std": 7.282382851786908,
+      "success_rate_variance": 0.0,
+      "total_tests": 100,
+      "successful_tests": 100
+    },
+    "Sarsa(λ)": {
+      "success_rate": 1.0,
+      "avg_reward": 71.7859387755102,
+      "avg_steps": 19.79,
+      "reward_std": 19.48787282935624,
+      "steps_std": 6.237459418705664,
+      "success_rate_variance": 0.0,
+      "total_tests": 100,
+      "successful_tests": 100
+    },
+    "Q-Guided AC": {
+      "success_rate": 1.0,
+      "avg_reward": 71.3819387755102,
+      "avg_steps": 18.93,
+      "reward_std": 22.057644409951582,
+      "steps_std": 7.9978184525531715,
+      "success_rate_variance": 0.0,
+      "total_tests": 100,
+      "successful_tests": 100
+    },
+    "Ultra Q-Guided AC": {
+      "success_rate": 1.0,
+      "avg_reward": 56.97283673469387,
+      "avg_steps": 29.97,
+      "reward_std": 34.434251709164464,
+      "steps_std": 15.891164211598847,
+      "success_rate_variance": 0.0,
+      "total_tests": 100,
+      "successful_tests": 100
+    }
+  }
+}
