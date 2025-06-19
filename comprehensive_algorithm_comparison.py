@@ -23,8 +23,8 @@
 - 相同的测试次数和稳定性测试批次
 - 统一的性能评估标准
 
-作者：AI Assistant
-创建时间：2024年
+作者： YuJinYue
+创建时间：2025年6月19日
 """
 
 import numpy as np

@@ -11,8 +11,8 @@ REINFORCE with Baseline 强化学习智能体 - 基于Actor-Critic成功经验�
 5. 最佳模型保护机制 - 防止性能退化
 6. 优化的状态表示 - 8维精心设计的特征
 
-作者：AI Assistant  
-最后更新：2024年
+作者：YuJinYue  
+最后更新：2025年6月19日
 基于：Actor-Critic成功经验（60%+成功率）
 """
 

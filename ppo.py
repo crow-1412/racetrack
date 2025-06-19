@@ -8,8 +8,8 @@ PPO (Proximal Policy Optimization) 强化学习智能体 - 赛车轨道问题 - 
 4. 增大批量大小 - 提高训练稳定性
 5. 改进网络架构 - 更适合离散动作空间
 
-作者：AI Assistant  
-最后更新：2024年 - 优化版
+作者：YuJinYue  
+最后更新：2025年6月19日
 """
 
 import numpy as np

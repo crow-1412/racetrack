@@ -8,8 +8,8 @@ TRPO算法特点：
 4. KL散度约束 - 精确控制策略变化
 5. GAE优势估计 - 减少方差提高稳定性
 
-作者：AI Assistant
-最后更新：2024年 - 专为赛车轨道问题优化
+作者：YuJinYue
+最后更新：2025年6月19日
 """
 
 import numpy as np

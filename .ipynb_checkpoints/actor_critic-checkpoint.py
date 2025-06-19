@@ -11,8 +11,8 @@ Actor-Critic 强化学习智能体 - 解决性能退化问题的优化版本
 4. 分离的Actor-Critic优化器
 5. 性能监控与自动恢复
 
-作者：AI Assistant
-最后更新：2024年
+作者：YuJinYue
+最后更新：2025年6月19日
 """
 
 import numpy as np
